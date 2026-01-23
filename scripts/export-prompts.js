@@ -10,6 +10,9 @@ if (!fs.existsSync(outputDir)) {
 
 // Process each context
 for (const context of fs.readdirSync(contextsDir)) {
+  // Skip _shared directory
+  if (context.startsWith('_')) continue;
+
   const contextPath = path.join(contextsDir, context);
 
   // Skip if not a directory
@@ -17,10 +20,19 @@ for (const context of fs.readdirSync(contextsDir)) {
     continue;
   }
 
+  // Try index.js first (new structure), fall back to prompts.js (legacy)
+  let promptModule;
+  const indexFile = path.join(contextPath, 'index.js');
   const promptsFile = path.join(contextPath, 'prompts.js');
-  if (!fs.existsSync(promptsFile)) continue;
 
-  const promptModule = require(promptsFile);
+  if (fs.existsSync(indexFile)) {
+    promptModule = require(indexFile);
+  } else if (fs.existsSync(promptsFile)) {
+    promptModule = require(promptsFile);
+  } else {
+    continue;
+  }
+
   const allPrompts = promptModule.getAllPrompts();
 
   const output = {
@@ -31,7 +43,9 @@ for (const context of fs.readdirSync(contextsDir)) {
       version: "1.0.0",
       context: context,
       description: p.description || p.label,
-      template: p.raw
+      template: p.raw,
+      // Include messages if available (new structure)
+      ...(p.messages && { messages: p.messages })
     }))
   };
 
