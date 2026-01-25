@@ -2,70 +2,64 @@ const path = require('path');
 const fs = require('fs');
 
 /**
- * Discover all context directories that have an index.js file
- */
-function discoverContexts() {
-  const contextsDir = path.join(__dirname, 'contexts');
-  const contexts = [];
-
-  for (const context of fs.readdirSync(contextsDir)) {
-    // Skip _shared directory
-    if (context.startsWith('_')) continue;
-
-    const contextPath = path.join(contextsDir, context);
-    if (!fs.statSync(contextPath).isDirectory()) continue;
-
-    const indexFile = path.join(contextPath, 'index.js');
-    if (!fs.existsSync(indexFile)) continue;
-
-    contexts.push({
-      name: context,
-      indexFile,
-      module: require(indexFile)
-    });
-  }
-
-  return contexts;
-}
-
-/**
- * Load all prompts from discovered contexts
+ * Load all prompts from the prompts directory
  */
 function loadAllPrompts() {
-  const prompts = [];
+  const promptsDir = path.join(__dirname, 'prompts');
+  const prompts = []
 
-  for (const context of discoverContexts()) {
-    const allPrompts = context.module.getAllPrompts();
+  for (const promptFile of fs.readdirSync(promptsDir)) {
+      if (!promptFile.endsWith('.js')) continue;
 
-    for (const prompt of allPrompts) {
-      prompts.push(`file://contexts/${context.name}/index.js:${prompt.id}`);
-    }
+      const promptPath = path.join(promptsDir, promptFile);
+      const promptModule = require(promptPath);
+
+      prompts.push({
+        id: promptModule.id,
+        label: promptModule.id,
+        raw: JSON.stringify(promptModule.messages),
+      });
   }
+
+  console.log("🟢 Logging prompts");
+  console.log(prompts);
 
   return prompts;
 }
 
 /**
- * Load all tests from discovered contexts
- * Tests already specify which prompt they belong to
+ * Load all tests from the prompts directory
  */
 function loadAllTests() {
+  const promptsDir = path.join(__dirname, 'prompts');
   const tests = [];
 
-  for (const context of discoverContexts()) {
-    if (typeof context.module.getAllTests === 'function') {
-      tests.push(...context.module.getAllTests());
+  for (const promptFile of fs.readdirSync(promptsDir)) {
+    if (!promptFile.endsWith('.js')) continue;
+    
+    const promptPath = path.join(promptsDir, promptFile);
+    const promptModule = require(promptPath);
+    
+    if (promptModule.tests && Array.isArray(promptModule.tests)) {
+      promptModule.tests.forEach(test => {
+        tests.push({
+          ...test,
+          prompts: [promptModule.id]
+        })
+      });;
     }
   }
+
+  console.log("🟢 Logging tests");
+  console.log(tests);
 
   return tests;
 }
 
 module.exports = {
-  description: 'Unified prompt evaluation across all contexts',
   providers: [
     {
-      id: 'openai:mistralai/mistral-small-3.2-24b-instruct',
+      id: 'openai:chat:mistralai/mistral-small-3.2-24b-instruct',
       config: {
         apiBaseUrl: 'https://ai.linagora.com/api',
         apiKeyEnvar: 'OPENAI_API_KEY'
@@ -75,7 +69,7 @@ module.exports = {
   defaultTest: {
     options: {
       provider: {
-        id: 'openai:openai/gpt-oss-120b',
+        id: 'openai:chat:openai/gpt-oss-120b',
         config: {
           apiBaseUrl: 'https://ai.linagora.com/api',
           apiKeyEnvar: 'OPENAI_API_KEY'

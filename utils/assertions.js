@@ -14,7 +14,7 @@ function noTranslation() {
 }
 
 /**
- * Assert that output contains only what was asked, no extra explanations
+ * Assert that output contains only what was asked (no extra explanations)
  */
 function noExtraInfo() {
   return {
