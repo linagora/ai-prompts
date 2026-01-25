@@ -1,17 +1,17 @@
-const { scribeSystemPrompt } = require('../_shared/system-prompts');
-const { noTranslation, noExtraInfo } = require('../../_shared/assertions');
-const { isBulletList } = require('../_shared/assertions');
+const { addDirectives } = require('../utils/directives');
+const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
   id: 'transform-to-bullets',
-  label: 'Transform to bullets',
   description: 'Transform text into a bullet list',
+  version: '1.0.0',
 
   messages: [
     {
       role: 'system',
-      content: scribeSystemPrompt({
-        task: 'transform the text into a bullet list.'
+      content: addDirectives({
+        task: 'transform the text into a bullet list.',
+        directives: ['noTranslate', 'noExtra']
       })
     },
     {
@@ -19,10 +19,6 @@ module.exports = {
       content: '{{input}}'
     }
   ],
-
-  get raw() {
-    return this.messages.map(m => m.content).join('\n\n');
-  },
 
   tests: [
     {
@@ -33,7 +29,10 @@ module.exports = {
       assert: [
         noTranslation(),
         noExtraInfo(),
-        isBulletList()
+        {
+          type: 'llm-rubric',
+          value: 'The output is formatted with bullet points or numbered list. The content is organized into clear, distinct items.'
+        }
       ]
     }
   ]

@@ -1,17 +1,17 @@
-const { scribeSystemPrompt } = require('../_shared/system-prompts');
-const { noTranslation, noExtraInfo, meaningPreserved } = require('../../_shared/assertions');
-const { isShorter } = require('../_shared/assertions');
+const { addDirectives } = require('../utils/directives');
+const { noTranslation, noExtraInfo, meaningPreserved } = require('../utils/assertions');
 
 module.exports = {
   id: 'make-shorter',
-  label: 'Make text shorter',
   description: 'Make text shorter while preserving meaning',
+  version: '1.0.0',
 
   messages: [
     {
       role: 'system',
-      content: scribeSystemPrompt({
-        task: 'make the text shorter while preserving its meaning.'
+      content: addDirectives({
+        task: 'make the text shorter while preserving its meaning.',
+        directives: ['noTranslate', 'noExtra']
       })
     },
     {
@@ -19,10 +19,6 @@ module.exports = {
       content: '{{input}}'
     }
   ],
-
-  get raw() {
-    return this.messages.map(m => m.content).join('\n\n');
-  },
 
   tests: [
     {
@@ -33,8 +29,11 @@ module.exports = {
       assert: [
         noTranslation(),
         noExtraInfo(),
-        isShorter(),
-        meaningPreserved()
+        meaningPreserved(),
+        {
+          type: 'llm-rubric',
+          value: 'The output is noticeably shorter than the original input while keeping the essential message.\nOriginal input: "{{input}}"'
+        }
       ]
     }
   ]

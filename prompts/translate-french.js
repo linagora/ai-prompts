@@ -1,25 +1,24 @@
-const { translateSystemPrompt } = require('../_shared/system-prompts');
-const { noExtraInfo, translationAccurate } = require('../../_shared/assertions');
+const { addDirectives } = require('../utils/directives');
+const { noExtraInfo, translationAccurate } = require('../utils/assertions');
 
 module.exports = {
   id: 'translate-french',
-  label: 'Translate to French',
   description: 'Translate text to French',
+  version: '1.0.0',
 
   messages: [
     {
       role: 'system',
-      content: translateSystemPrompt({ targetLanguage: 'French' })
+      content: addDirectives({
+        task: 'translate the text to French.',
+        directives: ['noExtra']
+      })
     },
     {
       role: 'user',
       content: '{{input}}'
     }
   ],
-
-  get raw() {
-    return this.messages.map(m => m.content).join('\n\n');
-  },
 
   tests: [
     {

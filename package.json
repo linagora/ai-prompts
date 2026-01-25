@@ -1,16 +1,15 @@
 {
   "name": "ai-prompts",
   "version": "1.0.0",
-  "description": "PromptFoo prompt evaluation suite for Linagora AI",
+  "description": "Prompt evaluation suite for Linagora AI",
   "main": "promptfooconfig.js",
   "scripts": {
     "eval": "promptfoo eval",
     "view": "promptfoo view",
     "export": "node scripts/export-prompts.js"
   },
-  "keywords": ["promptfoo", "llm", "prompts", "evaluation"],
-  "license": "ISC",
+  "license": "AGPL-3.0",
   "devDependencies": {
-    "promptfoo": "^0.100.0"
+    "promptfoo": "0.120.17"
   }
 }

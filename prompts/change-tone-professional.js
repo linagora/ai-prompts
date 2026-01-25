@@ -1,17 +1,17 @@
-const { scribeSystemPrompt } = require('../_shared/system-prompts');
-const { noTranslation, noExtraInfo } = require('../../_shared/assertions');
-const { toneIs } = require('../_shared/assertions');
+const { addDirectives } = require('../utils/directives');
+const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
   id: 'change-tone-professional',
-  label: 'Professional tone',
   description: 'Change tone to professional',
+  version: '1.0.0',
 
   messages: [
     {
       role: 'system',
-      content: scribeSystemPrompt({
-        task: 'change the tone to be professional.'
+      content: addDirectives({
+        task: 'change the tone to be professional.',
+        directives: ['noTranslate', 'noExtra']
       })
     },
     {
@@ -19,10 +19,6 @@ module.exports = {
       content: '{{input}}'
     }
   ],
-
-  get raw() {
-    return this.messages.map(m => m.content).join('\n\n');
-  },
 
   tests: [
     {
@@ -33,7 +29,10 @@ module.exports = {
       assert: [
         noTranslation(),
         noExtraInfo(),
-        toneIs('professional')
+        {
+          type: 'llm-rubric',
+          value: 'The tone is professional and formal. No slang, casual language, or informal expressions.'
+        }
       ]
     }
   ]
