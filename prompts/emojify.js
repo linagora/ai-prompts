@@ -1,4 +1,4 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
@@ -6,19 +6,7 @@ module.exports = {
   description: 'Add emojis to important parts of the text',
   version: '1.0.0',
 
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'add emojis to the important parts of the text. Do not try to rephrase or replace text.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  messages: buildMessages({ task : 'Add emojis to the important parts of the text. Do not try to rephrase or replace text.'}),
 
   tests: [
     {

@@ -1,4 +1,4 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo, meaningPreserved } = require('../utils/assertions');
 
 module.exports = {
@@ -6,19 +6,7 @@ module.exports = {
   description: 'Make text shorter while preserving meaning',
   version: '1.0.0',
 
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'make the text shorter while preserving its meaning.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  messages: buildMessages({ task : 'Make the text shorter while preserving its meaning.'}),
 
   tests: [
     {

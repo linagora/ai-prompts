@@ -1,4 +1,4 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
@@ -6,19 +6,7 @@ module.exports = {
   description: 'Change tone to polite',
   version: '1.0.0',
 
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'change the tone to be polite.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  messages: buildMessages({ task : 'Change the tone to be polite.'}),
 
   tests: [
     {
