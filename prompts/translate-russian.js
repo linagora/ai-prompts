@@ -1,24 +1,12 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noExtraInfo, translationAccurate } = require('../utils/assertions');
 
 module.exports = {
   id: 'translate-russian',
   description: 'Translate text to Russian',
   version: '1.0.0',
-
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'translate the text to Russian.',
-        directives: ['noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  
+  messages: buildMessages({ task : 'Translate the text to Russian.'}),
 
   tests: [
     {

@@ -1,24 +1,12 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
   id: 'correct-grammar',
   description: 'Correct grammar and spelling errors',
   version: '1.0.0',
-
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'correct the grammar and spelling of the text.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  
+  messages: buildMessages({ task : 'Correct the grammar and spelling of the text.'}),
 
   tests: [
     {

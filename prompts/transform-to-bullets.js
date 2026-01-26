@@ -1,24 +1,12 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
   id: 'transform-to-bullets',
   description: 'Transform text into a bullet list',
   version: '1.0.0',
-
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'transform the text into a bullet list.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  
+  messages: buildMessages({ task : 'Transform the text into a bullet list.'}),
 
   tests: [
     {

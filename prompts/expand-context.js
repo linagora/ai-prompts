@@ -1,4 +1,4 @@
-const { addDirectives } = require('../utils/directives');
+const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
 module.exports = {
@@ -6,19 +6,7 @@ module.exports = {
   description: 'Expand context to make text more detailed',
   version: '1.0.0',
 
-  messages: [
-    {
-      role: 'system',
-      content: addDirectives({
-        task: 'expand the context of the text to make it more detailed and comprehensive.',
-        directives: ['noTranslate', 'noExtra']
-      })
-    },
-    {
-      role: 'user',
-      content: '{{input}}'
-    }
-  ],
+  messages: buildMessages({ task : 'Expand the context of the text to make it more detailed and comprehensive.'}),
 
   tests: [
     {
