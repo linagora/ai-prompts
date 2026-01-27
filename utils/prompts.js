@@ -11,9 +11,8 @@ const USER_INSTRUCTIONS = (task) => `INSTRUCTION:
 ${task}
 
 TEXT:
-<<<
 {{input}}
->>>`
+`
 
 /**
  * Build a system prompt from fragments
