@@ -17,11 +17,9 @@ module.exports = {
         input: "Je suis aller au magasin hier et j'ai acheter du pain. Les pomme était très bonne."
       },
       assert: [
-        noTranslation(),
-        noExtraInfo({ task }),
         {
-          type: 'llm-rubric',
-          value: 'Grammar and spelling errors from the original input have been corrected. The text follows proper grammatical rules.\nOriginal input with errors: "{{input}}"'
+          type: 'equals',
+           value: "Je suis allé au magasin hier et j'ai acheté du pain. Les pommes étaient très bonnes."
         }
       ]
     }
