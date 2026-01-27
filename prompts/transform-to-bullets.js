@@ -1,12 +1,14 @@
 const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
+const task = 'Transform the text into a bullet list.';
+
 module.exports = {
   id: 'transform-to-bullets',
   description: 'Transform text into a bullet list',
   version: '1.0.0',
   
-  messages: buildMessages({ task : 'Transform the text into a bullet list.'}),
+  messages: buildMessages({ task }),
 
   tests: [
     {
@@ -16,7 +18,7 @@ module.exports = {
       },
       assert: [
         noTranslation(),
-        noExtraInfo(),
+        noExtraInfo({ task }),
         {
           type: 'llm-rubric',
           value: 'The output is formatted with bullet points or numbered list. The content is organized into clear, distinct items.'

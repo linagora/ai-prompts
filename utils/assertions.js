@@ -16,10 +16,10 @@ function noTranslation() {
 /**
  * Assert that output contains only what was asked (no extra explanations)
  */
-function noExtraInfo() {
+function noExtraInfo({ task }) {
   return {
     type: 'llm-rubric',
-    value: 'The output contains ONLY what was explicitly asked. No extra explanations, commentary, or preamble.'
+    value: `The output contains ONLY what was explicitly asked. No extra explanations, commentary, or preamble.\nTask: ${task} Original input: "{{input}}"`
   };
 }
 
@@ -29,7 +29,7 @@ function noExtraInfo() {
 function meaningPreserved() {
   return {
     type: 'llm-rubric',
-    value: 'The core meaning of the original text is unchanged. Key information and intent are preserved.\nOriginal input: "{{input}}"'
+    value: `The core meaning of the original text is unchanged. Key information and intent are preserved.\nOriginal input: "{{input}}"`
   };
 }
 
