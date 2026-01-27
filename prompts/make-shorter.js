@@ -1,12 +1,14 @@
 const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo, meaningPreserved } = require('../utils/assertions');
 
+const task = 'Make the text shorter while preserving its meaning.';
+
 module.exports = {
   id: 'make-shorter',
   description: 'Make text shorter while preserving meaning',
   version: '1.0.0',
 
-  messages: buildMessages({ task : 'Make the text shorter while preserving its meaning.'}),
+  messages: buildMessages({ task }),
 
   tests: [
     {
@@ -16,7 +18,7 @@ module.exports = {
       },
       assert: [
         noTranslation(),
-        noExtraInfo(),
+        noExtraInfo({ task }),
         meaningPreserved(),
         {
           type: 'llm-rubric',

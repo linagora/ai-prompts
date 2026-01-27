@@ -1,12 +1,14 @@
 const { buildMessages } = require('../utils/prompts');
 const { noTranslation, noExtraInfo } = require('../utils/assertions');
 
+const task = 'Change the tone to be polite.';
+
 module.exports = {
   id: 'change-tone-polite',
   description: 'Change tone to polite',
   version: '1.0.0',
 
-  messages: buildMessages({ task : 'Change the tone to be polite.'}),
+  messages: buildMessages({ task }),
 
   tests: [
     {
@@ -16,7 +18,7 @@ module.exports = {
       },
       assert: [
         noTranslation(),
-        noExtraInfo(),
+        noExtraInfo({ task }),
         {
           type: 'llm-rubric',
           value: 'The tone is polite and courteous. Uses respectful language and considerate phrasing.'
