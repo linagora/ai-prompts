@@ -6,6 +6,7 @@
   "scripts": {
     "eval": "promptfoo eval",
     "view": "promptfoo view",
+    "eval-ci": "promptfoo eval -o results.json -o report.html",
     "export": "node scripts/export-prompts.js"
   },
   "license": "AGPL-3.0",
