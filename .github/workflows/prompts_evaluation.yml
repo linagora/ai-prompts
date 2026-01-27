@@ -13,6 +13,15 @@ jobs:
         with:
           node-version: 24
       - run: npm install
-      - run: npm run eval
+      - name: Run evaluation
+        run: npm run eval-ci
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: eval-results
+          path: |
+            results.json
+            report.html
