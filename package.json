@@ -6,7 +6,7 @@
   "scripts": {
     "eval": "promptfoo eval",
     "view": "promptfoo view",
-    "eval-ci": "promptfoo eval -o results.json -o report.html",
+    "eval-ci": "PROMPTFOO_REQUEST_BACKOFF_MS=5000 promptfoo eval --verbose && node scripts/token-summary.js",
     "export": "node scripts/export-prompts.js"
   },
   "license": "AGPL-3.0",
