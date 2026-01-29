@@ -14,7 +14,7 @@ module.exports = {
     {
       description: 'Make shorter - French input',
       vars: {
-        input: "Nous avons le plaisir de vous informer que votre demande a été reçue et sera traitée dans les meilleurs délais. Notre équipe s'engage à vous fournir une réponse complète et détaillée dès que possible."
+        input: "Nous avons le plaisir de vous informer, par le présent message, que votre demande a bien été prise en compte par nos services à la suite de sa réception. Celle-ci a été enregistrée dans notre système et sera examinée avec la plus grande attention par l’équipe concernée, qui procédera à son traitement dans les meilleurs délais et reviendra vers vous ultérieurement afin de vous apporter une réponse."
       },
       assert: [
         noTranslation(),
