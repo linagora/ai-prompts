@@ -9,6 +9,7 @@ if (!fs.existsSync(resultsPath)) {
 }
 
 const data = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+const results = data.results?.results || [];
 const prompts = data.results?.prompts || [];
 
 const rows = prompts
@@ -68,3 +69,24 @@ console.log(
   pad(totals.gradingPrompt, col.num) + pad(totals.gradingCompletion, col.num) + pad(totals.gradingTotal, col.num)
 );
 console.log();
+
+// --- Pass/Fail Summary ---
+const passed = results.filter(r => r.success);
+const failed = results.filter(r => !r.success);
+
+console.log('--- Test Summary ---\n');
+console.log(`Total: ${results.length}  Passed: ${passed.length}  Failed: ${failed.length}`);
+
+if (failed.length > 0) {
+  console.log('\nFailures:\n');
+  for (const f of failed) {
+    const prompt = f.prompt?.label || 'unknown';
+    const test = f.testCase?.description || 'unknown';
+    const reason = f.gradingResult?.reason || f.error || 'no reason';
+    console.log(`  FAIL [${prompt}] ${test}`);
+    console.log(`       ${reason}\n`);
+  }
+  process.exit(1);
+}
+
+console.log('\nAll tests passed.\n');

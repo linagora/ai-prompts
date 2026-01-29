@@ -20,10 +20,7 @@ function loadAllPrompts() {
         raw: JSON.stringify(promptModule.messages),
       });
   }
-
-  console.log("🟢 Logging prompts");
-  console.log(prompts);
-
+  console.log(`🟢 Loaded ${prompts.length} prompts`);
   return prompts;
 }
 
@@ -49,10 +46,7 @@ function loadAllTests() {
       });;
     }
   }
-
-  console.log("🟢 Logging tests");
-  console.log(tests);
-
+  console.log(`🟢 Prepared ${tests.length} tests`);
   return tests;
 }
 
@@ -62,7 +56,8 @@ module.exports = {
       id: 'openai:chat:mistralai/mistral-small-3.2-24b-instruct',
       config: {
         apiBaseUrl: process.env.OPENAI_API_HOST,
-        apiKey: process.env.OPENAI_API_KEY
+        apiKey: process.env.OPENAI_API_KEY,
+        maxRetries: 3
       }
     }
   ],
@@ -72,7 +67,8 @@ module.exports = {
         id: 'openai:chat:openai/gpt-oss-120b',
         config: {
           apiBaseUrl: process.env.OPENAI_API_HOST,
-          apiKey: process.env.OPENAI_API_KEY
+          apiKey: process.env.OPENAI_API_KEY,
+          maxRetries: 3
         }
       },
     }
