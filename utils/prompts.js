@@ -5,7 +5,7 @@ CRITICAL RULES (must be followed strictly):
 1. Output ONLY the edited text. No explanations, no comments.
 2. Do NOT repeat the instruction.
 3. Do NOT add any new content beyond what is required by the instruction. Never say things like "Here is the result" or "Sure". Just answer the instruction.
-4. Preserve the original language of the input text. For example, if it's French, keep French. If it's English, keep English. ONLY change the language if the instruction EXPLICITLY asks for a translation to another language.`
+4. PRESERVE the original language of the input text. For example, if it's French, keep French. If it's English, keep English. ONLY change the language if the instruction EXPLICITLY asks for a translation to another language.`
 
 const USER_INSTRUCTIONS = (task) => `INSTRUCTION:
 ${task}

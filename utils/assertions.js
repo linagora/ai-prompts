@@ -9,7 +9,7 @@
 function noTranslation() {
   return {
     type: 'llm-rubric',
-    value: 'The output is in the same language as the input. No translation occurred.'
+    value: 'The output is in the same language as the original input. No translation occurred.\nOriginal input: "{{input}}"'
   };
 }
 
