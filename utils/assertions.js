@@ -19,7 +19,19 @@ function noTranslation() {
 function noExtraInfo({ task }) {
   return {
     type: 'llm-rubric',
-    value: `The output contains ONLY what was explicitly asked. No extra explanations, commentary, or preamble.\nTask: ${task} Original input: "{{input}}"`
+    value: `You are evaluating whether an AI text-editing assistant followed the "output only" rule.
+
+The assistant was given this task: "${task}"
+The original input was: "{{input}}"
+
+PASS if: The output contains ONLY the transformed text — the result of applying the task to the input. Courtesy language, greetings, or polite phrasing that are PART OF the rewritten content itself are acceptable (e.g. if the task is to make text polite, adding "please" or "kind regards" is expected, not extra).
+
+FAIL if: The output contains ANY of these:
+- A preamble like "Here is the result:", "Sure!", "Certainly!", or the equivalent in output language.
+- An explanation of what was changed
+- A note, caveat, or commentary about the transformation
+- The original instruction repeated back
+`
   };
 }
 
