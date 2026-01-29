@@ -74,8 +74,11 @@ module.exports = {
           apiBaseUrl: process.env.OPENAI_API_HOST,
           apiKey: process.env.OPENAI_API_KEY
         }
-      }
+      },
     }
+  },
+  evaluateOptions: {
+    maxConcurrency: 2
   },
   prompts: loadAllPrompts(),
   tests: loadAllTests()
