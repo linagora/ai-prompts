@@ -61,8 +61,8 @@ module.exports = {
     {
       id: 'openai:chat:mistralai/mistral-small-3.2-24b-instruct',
       config: {
-        apiBaseUrl: 'https://ai.linagora.com/api',
-        apiKeyEnvar: 'OPENAI_API_KEY'
+        apiBaseUrl: process.env.OPENAI_API_HOST,
+        apiKey: process.env.OPENAI_API_KEY
       }
     }
   ],
@@ -71,8 +71,8 @@ module.exports = {
       provider: {
         id: 'openai:chat:openai/gpt-oss-120b',
         config: {
-          apiBaseUrl: 'https://ai.linagora.com/api',
-          apiKeyEnvar: 'OPENAI_API_KEY'
+          apiBaseUrl: process.env.OPENAI_API_HOST,
+          apiKey: process.env.OPENAI_API_KEY
         }
       }
     }
