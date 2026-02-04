@@ -6,6 +6,15 @@ This file provides guidance to coding agents when working with code in this repo
 
 PromptFoo evaluation suite for Linagora AI prompts. Tests and evaluates LLM prompts using the PromptFoo framework with LLM-based assertions.
 
+## Setup
+
+```bash
+cp env.example .env    # Copy and fill in your API key
+npm install            # Install dependencies
+```
+
+Requires `OPENAI_API_KEY` and `OPENAI_API_HOST` environment variables (via `.env` file or exported).
+
 ## Commands
 
 ```bash
@@ -14,33 +23,18 @@ npm run view     # Open results UI in browser
 npm run export   # Export prompts to JSON format (build/)
 ```
 
-Requires `OPENAI_API_KEY` environment variable set to AI provider key.
-
 ## Architecture
 
 ### Directory Structure
 
 ```
-prompts/
-├── change-tone-casual.js
-├── change-tone-polite.js
-├── change-tone-professional.js
-├── correct-grammar.js
-├── emojify.js
-├── expand-context.js
-├── make-shorter.js
-├── transform-to-bullets.js
-├── translate-english.js
-├── translate-french.js
-├── translate-russian.js
-└── translate-vietnamese.js
-
+prompts/                # Prompt definitions (auto-discovered)
 utils/
 ├── directives.js       # System prompt directive builders
 └── assertions.js       # Shared assertions for tests
-
 scripts/
 └── export-prompts.js   # Exports prompts to JSON (build/prompts.json)
+env.example             # Environment variables template
 ```
 
 ### Dynamic Prompt Loading
