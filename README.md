@@ -4,10 +4,9 @@ PromptFoo evaluation suite for testing LLM prompts.
 
 ## Quick Start
 
-1. Set environment variables:
+1. Copy `env.example` to `.env` and fill in your API key:
    ```bash
-   export OPENAI_API_KEY=your-key
-   export OPENAI_API_HOST=https://ai.linagora.com/api
+   cp env.example .env
    ```
 
 2. Run evaluations:
