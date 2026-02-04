@@ -14,7 +14,7 @@ npm run view     # Open results UI in browser
 npm run export   # Export prompts to JSON format (build/)
 ```
 
-Requires `OPENAI_API_KEY` environment variable set to Linagora AI key.
+Requires `OPENAI_API_KEY` environment variable set to AI provider key.
 
 ## Architecture
 
