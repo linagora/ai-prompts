@@ -1,5 +1,6 @@
-const { buildMessages } = require('../utils/prompts');
-const { noTranslation, noExtraInfo } = require('../utils/assertions');
+const { buildMessages } = require('../../utils/prompts');
+const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
+const { noTranslation, noExtraInfo } = require('../../utils/assertions');
 
 const task = 'Add emojis to the important parts of the text. Do not try to rephrase or replace text.';
 
@@ -8,7 +9,7 @@ module.exports = {
   description: 'Add emojis to important parts of the text',
   version: '1.0.0',
 
-  messages: buildMessages({ task }),
+  messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
   tests: [
     {

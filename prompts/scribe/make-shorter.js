@@ -1,5 +1,6 @@
-const { buildMessages } = require('../utils/prompts');
-const { noTranslation, noExtraInfo, meaningPreserved } = require('../utils/assertions');
+const { buildMessages } = require('../../utils/prompts');
+const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
+const { noTranslation, noExtraInfo, meaningPreserved } = require('../../utils/assertions');
 
 const task = 'Make the text shorter while preserving its meaning.';
 
@@ -8,7 +9,7 @@ module.exports = {
   description: 'Make text shorter while preserving meaning',
   version: '1.0.0',
 
-  messages: buildMessages({ task }),
+  messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
   tests: [
     {
