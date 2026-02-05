@@ -90,7 +90,6 @@ INVALID FORMATS:
  * @param {string} expectedAction - Expected action: 'YES' or 'NO'
  */
 function actionRequirementCorrect(expectedAction) {
-  console.log('Expected action requirement for this test case:', expectedAction);
   return {
     type: 'llm-rubric',
     value: `Validate the action requirement classification:
@@ -107,7 +106,6 @@ The first value in the output (before any commas) must be: ${expectedAction}`
  */
 function labelsMatchExpected(expectedLabels = []) {
   const labelsList = expectedLabels.length > 0 ? expectedLabels.join(', ') : 'no labels';
-  console.log('Expected labels for this test case:', labelsList);
   
   return {
     type: 'llm-rubric',
