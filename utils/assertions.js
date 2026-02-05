@@ -56,9 +56,91 @@ function translationAccurate(targetLanguage) {
   };
 }
 
+/**
+ * Assert that email classification output has correct format
+ */
+function classificationFormatValid() {
+  return {
+    type: 'llm-rubric',
+    value: `Validate the email classification output format:
+
+FORMAT REQUIREMENTS:
+- Single line with comma-separated values
+- No spaces around commas
+- First value: YES or NO (action required)
+- Optional: up to 2 label IDs after the first value
+- No explanations or extra text
+
+VALID FORMAT EXAMPLES:
+- YES,urgent,meeting
+- NO,informational
+- YES,review
+- NO
+
+INVALID FORMATS:
+- YES, urgent (has space)
+- YES - urgent (wrong separator)
+- Multiple lines
+- Extra explanations like "Here is the result: YES"`
+  };
+}
+
+/**
+ * Assert that action requirement is correct
+ * @param {string} expectedAction - Expected action: 'YES' or 'NO'
+ */
+function actionRequirementCorrect(expectedAction) {
+  console.log('Expected action requirement for this test case:', expectedAction);
+  return {
+    type: 'llm-rubric',
+    value: `Validate the action requirement classification:
+
+EXPECTED ACTION: ${expectedAction}
+
+The first value in the output (before any commas) must be: ${expectedAction}`
+  };
+}
+
+/**
+ * Assert that labels match the expected output
+ * @param {string[]} expectedLabels - Array of acceptable labels
+ */
+function labelsMatchExpected(expectedLabels = []) {
+  const labelsList = expectedLabels.length > 0 ? expectedLabels.join(', ') : 'no labels';
+  console.log('Expected labels for this test case:', labelsList);
+  
+  return {
+    type: 'llm-rubric',
+    value: `Validate that the assigned labels are from the acceptable set.
+
+ACCEPTABLE LABELS: ${labelsList}
+
+To extract labels from output:
+1. Look at everything after the first comma
+2. For "YES,urgent,meeting" → labels are: urgent, meeting
+3. For "NO,informational" → label is: informational
+4. For "YES" or "NO" → no labels assigned
+
+PASS CRITERIA:
+${expectedLabels.length === 0 
+  ? 'Output must be only "YES" or "NO" with no labels.' 
+  : `PASS if: Every label in the output is from this set: ${labelsList}
+
+Example acceptable outputs:
+- YES,${expectedLabels[0]}
+- YES,${expectedLabels.length > 1 ? expectedLabels[1] : expectedLabels[0]}
+- YES,${expectedLabels.join(',')}
+- NO (no labels needed)
+FAIL if: Any label in output is NOT in the acceptable set.`}`
+  };
+}
+
 module.exports = {
   noTranslation,
   noExtraInfo,
   meaningPreserved,
-  translationAccurate
+  translationAccurate,
+  classificationFormatValid,
+  actionRequirementCorrect,
+  labelsMatchExpected
 };
