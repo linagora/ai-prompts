@@ -4,7 +4,9 @@
   "description": "Prompt evaluation suite for Linagora AI",
   "main": "promptfooconfig.js",
   "scripts": {
-    "eval": "promptfoo eval",
+    "eval": "npm run eval:scribe && npm run eval:email",
+    "eval:email": "promptfoo eval -c promptfooconfig.email.js",
+    "eval:scribe": "promptfoo eval -c promptfooconfig.scribe.js",
     "view": "promptfoo view",
     "eval-ci": "PROMPTFOO_REQUEST_BACKOFF_MS=5000 promptfoo eval -o results.json -o report.html --verbose && node scripts/eval-summary.js",
     "export": "node scripts/export-prompts.js"
