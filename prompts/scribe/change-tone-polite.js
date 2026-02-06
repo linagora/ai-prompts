@@ -1,5 +1,6 @@
-const { buildMessages } = require('../utils/prompts');
-const { noTranslation, noExtraInfo } = require('../utils/assertions');
+const { buildMessages } = require('../../utils/prompts');
+const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
+const { noTranslation, noExtraInfo } = require('../../utils/assertions');
 
 const task = 'Change the tone to be polite.';
 
@@ -8,7 +9,7 @@ module.exports = {
   description: 'Change tone to polite',
   version: '1.0.0',
 
-  messages: buildMessages({ task }),
+  messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
   tests: [
     {

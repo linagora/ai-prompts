@@ -1,5 +1,6 @@
-const { buildMessages } = require('../utils/prompts');
-const { noTranslation, noExtraInfo, meaningPreserved } = require('../utils/assertions');
+const { buildMessages } = require('../../utils/prompts');
+const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
+const { noTranslation, noExtraInfo, meaningPreserved } = require('../../utils/assertions');
 
 const task = `Summarize the text from the user.
 
@@ -17,7 +18,7 @@ module.exports = {
   description: 'Summarize a text',
   version: '1.0.0',
 
-  messages: buildMessages({ task }),
+  messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
   tests: [
     {

@@ -1,5 +1,6 @@
-const { buildMessages } = require('../utils/prompts');
-const { noTranslation, noExtraInfo } = require('../utils/assertions');
+const { buildMessages } = require('../../utils/prompts');
+const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
+const { noTranslation, noExtraInfo } = require('../../utils/assertions');
 
 const task = 'Convert the following text into structured bulleted lists, clearly separating distinct use cases.';
 
@@ -8,7 +9,7 @@ module.exports = {
   description: 'Transform text into a bullet list',
   version: '1.0.1',
   
-  messages: buildMessages({ task }),
+  messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
   tests: [
     {
