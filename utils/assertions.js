@@ -61,27 +61,31 @@ function translationAccurate(targetLanguage) {
  */
 function classificationFormatValid() {
   return {
-    type: 'llm-rubric',
-    value: `Validate the email classification output format:
-
-FORMAT REQUIREMENTS:
-- Single line with comma-separated values
-- No spaces around commas
-- First value: YES or NO (action required)
-- Optional: up to 2 label IDs after the first value
-- No explanations or extra text
-
-VALID FORMAT EXAMPLES:
-- YES,urgent,meeting
-- NO,informational
-- YES,review
-- NO
-
-INVALID FORMATS:
-- YES, urgent (has space)
-- YES - urgent (wrong separator)
-- Multiple lines
-- Extra explanations like "Here is the result: YES"`
+    type: 'javascript',
+    value: `
+      const outputText = (output || '').trim();
+      
+      if (!outputText) {
+        return { pass: false, score: 0, reason: 'Output is empty' };
+      }
+      
+      if (outputText.includes('\\n')) {
+        return { pass: false, score: 0, reason: 'Output contains multiple lines' };
+      }
+      
+      if (outputText.includes(', ')) {
+        return { pass: false, score: 0, reason: 'Output has spaces after commas' };
+      }
+      
+      const parts = outputText.split(',');
+      const action = parts[0];
+      
+      if (action !== 'YES' && action !== 'NO') {
+        return { pass: false, score: 0, reason: 'First value must be YES or NO, got: ' + action };
+      }
+      
+      return { pass: true, score: 1, reason: 'Format is valid' };
+    `
   };
 }
 
@@ -91,12 +95,18 @@ INVALID FORMATS:
  */
 function actionRequirementCorrect(expectedAction) {
   return {
-    type: 'llm-rubric',
-    value: `Validate the action requirement classification:
-
-EXPECTED ACTION: ${expectedAction}
-
-The first value in the output (before any commas) must be: ${expectedAction}`
+    type: 'javascript',
+    value: `
+      const outputText = (output || '').trim();
+      const action = outputText.split(',')[0];
+      const isValid = action === '${expectedAction}';
+      
+      return {
+        pass: isValid,
+        score: isValid ? 1 : 0,
+        reason: 'Expected action: ${expectedAction}, got: ' + action
+      };
+    `
   };
 }
 
@@ -116,23 +126,21 @@ function labelAccuracyScore(expectedLabels = []) {
       const expectedSet = new Set(expectedLabels);
       
       const correctLabels = outputLabels.filter(l => expectedSet.has(l));
-      const totalOutput = outputLabels.length;
       const totalExpected = expectedLabels.length;
       
       let accuracy = 0;
-      if (totalExpected === 0 && totalOutput === 0) {
+      if (totalExpected === 0 && correctLabels.length === 0) {
         accuracy = 100;
       } else if (totalExpected === 0) {
         accuracy = 0;
       } else {
-        accuracy = Math.round((correctLabels.length / totalOutput) * 100);
+        accuracy = Math.round((correctLabels.length / totalExpected) * 100);
       }
       
       const metrics = {
         accuracy,
         correctLabels: correctLabels.length,
         totalExpected,
-        totalOutput,
         outputLabels,
         expectedLabels,
         missingLabels: expectedLabels.filter(l => !outputLabels.includes(l)),
@@ -140,12 +148,13 @@ function labelAccuracyScore(expectedLabels = []) {
       };
       
       return {
-        pass: accuracy === 100,
+        pass: correctLabels.length === totalExpected && metrics.missingLabels.length === 0,
         score: accuracy / 100,
-        reason: \`Label Accuracy: \${accuracy}% (\${correctLabels.length}/\${totalOutput} correct)\${metrics.missingLabels.length > 0 ? ' | Missing: ' + metrics.missingLabels.join(',') : ''}\${metrics.extraLabels.length > 0 ? ' | Extra: ' + metrics.extraLabels.join(',') : ''}\`,
+        reason: 'Label Accuracy: ' + accuracy + '% (' + correctLabels.length + '/' + totalExpected + ' correct)' + (metrics.missingLabels.length > 0 ? ' | Missing: ' + metrics.missingLabels.join(',') : '') + (metrics.extraLabels.length > 0 ? ' | Extra: ' + metrics.extraLabels.join(',') : ''),
         namedScores: {
           labelAccuracy: accuracy / 100,
           correctLabels: correctLabels.length,
+          totalExpected: totalExpected,
           missingLabels: metrics.missingLabels.length,
           extraLabels: metrics.extraLabels.length
         }
