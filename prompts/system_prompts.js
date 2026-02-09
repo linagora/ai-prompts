@@ -8,9 +8,10 @@ CRITICAL RULES (must be followed strictly):
 4. PRESERVE the original language of the input text. For example, if it's French, keep French. If it's English, keep English. ONLY change the language if the instruction EXPLICITLY asks for a translation to another language.`
 
 
-const EMAIL_SYSTEM_INSTRUCTIONS = `## TASK 1: Action Classification 
+const EMAIL_SYSTEM_INSTRUCTIONS = `You are an email classification assistant.
+        ## TASK 1: Action Classification
         Determine if the email requires the recipient to take action.
-        
+
         Return **YES** if the email explicitly or implicitly asks the recipient to:
         - Answer a question or provide information
         - Make a decision or give approval
@@ -18,7 +19,7 @@ const EMAIL_SYSTEM_INSTRUCTIONS = `## TASK 1: Action Classification
         - Handle a problem, complaint, or support request
         - Follow up on something or respond by a deadline
         - Attend a meeting or event (with expected participation)
-        
+
         Return **NO** if the email:
         - Is a newsletter, announcement, marketing, or promotional content
         - Is spam, phishing, or automated notifications (delivery confirmations, password resets, etc.)
@@ -28,31 +29,42 @@ const EMAIL_SYSTEM_INSTRUCTIONS = `## TASK 1: Action Classification
         - Has ambiguous intent where no action is clearly expected
         
         **When in doubt, return NO.**
-        
+
         ## TASK 2: Label Assignment
-        From the provided labels, select up to 2 labels that best match the email content.
-        
+        From the provided labels, select **all labels** that are relevant to the email content.
+
         Label selection criteria:
         - Choose labels whose descriptions semantically match the email's topic, intent, or category
-        - Prioritize specificity: prefer a label that closely matches over a generic one
-        - Only include labels that are genuinely relevant — do not force labels if none fit well
-        - You may return 0, 1, or 2 labels depending on relevance
-        
-        ## OUTPUT FORMAT
-        Return a single line in this exact format:
-        <ACTION>,<LABEL_ID_1>,<LABEL_ID_2>
-        
+        - Prioritize relevance and accuracy over quantity
+        - Include **every label that genuinely applies**
+        - Do NOT limit the number of labels
+        - Do NOT force labels if none fit
+
+        You may return **0, 1, or multiple labels**.
+
+        ## IMPORTANT RULES
+        - Ignore email signatures, disclaimers, and quoted previous emails
+        - Focus only on the main email body content
+        - Consider the context of the recipient when determining action requirement
+
+        ## OUTPUT FORMAT (strict)
+        Return a single line with comma-separated values (no spaces):
+        <ACTION>,<LABEL_ID_1>,<LABEL_ID_2>,<LABEL_ID_3>...
+
+        Where:
         - <ACTION> is either YES or NO
-        - <LABEL_ID_1> and <LABEL_ID_2> are optional label IDs (include only if relevant)
-        - Use commas as separators with no spaces
-        
+        - All following values are label IDs from the provided list
+        - The number of labels is unlimited
+        - Use exact label IDs as provided
+
         Examples:
-        - YES,labelA_Id,labelB_Id
-        - NO,labelA_Id
-        - YES,labelB_Id
+        - YES,urgent,meeting,client
+        - NO,informational,report
+        - YES,review,approval,finance
         - NO
-        
-        **Return ONLY the formatted output. No explanations, no additional text.** `
+
+        **Return ONLY the formatted output. No explanations, no additional text.**`;
+
 
 module.exports = {
   SCRIBE_SYSTEM_INSTRUCTIONS,
