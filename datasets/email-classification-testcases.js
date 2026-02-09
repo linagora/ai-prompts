@@ -30,7 +30,7 @@ Sarah`
     
     expectedOutput: {
       action: 'YES',
-      labels: ['review', 'followup', 'decision']
+      labels: ['review', 'followup', 'urgent']
     }
   },
   {
@@ -84,7 +84,7 @@ Director`
     
     expectedOutput: {
       action: 'YES',
-      labels: ['urgent', 'meeting']
+      labels: ['urgent', 'meeting', 'followup']
     }
   },
   {
@@ -109,7 +109,7 @@ Support Team`
     
     expectedOutput: {
       action: 'YES',
-      labels: ['urgent', 'decision', 'followup']
+      labels: ['urgent', 'followup']
     }
   },
   {
@@ -153,17 +153,17 @@ Thanks for the great work!`
       subject: 'Budget Approval Required - Marketing Campaign Q2 2026',
       body: `Hi Emma,
 
-We need your approval for the Q2 2026 marketing campaign budget of $150,000. The breakdown is attached.
+        We need your approval for the Q2 2026 marketing campaign budget of $150,000. The breakdown is attached.
 
-Please review and approve by Friday so we can proceed with vendor contracts. Contact me if you have any questions about the allocation.
+        Please review and approve by Friday so we can proceed with vendor contracts. Contact me if you have any questions about the allocation.
 
-Thanks,
-Finance Team`
+        Thanks,
+        Finance Team`
     },
     
     expectedOutput: {
       action: 'YES',
-      labels: ['decision', 'review']
+      labels: ['decision', 'review', 'urgent']
     }
   }
 ];
