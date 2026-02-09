@@ -101,35 +101,57 @@ The first value in the output (before any commas) must be: ${expectedAction}`
 }
 
 /**
- * Assert that labels match the expected output
- * @param {string[]} expectedLabels - Array of acceptable labels
+ * Calculate label accuracy with detailed metrics
+ * @param {string[]} expectedLabels - Expected labels for this test case
+ * @returns {Object} PromptFoo assertion with javascript function
  */
-function labelsMatchExpected(expectedLabels = []) {
-  const labelsList = expectedLabels.length > 0 ? expectedLabels.join(', ') : 'no labels';
-  
+function labelAccuracyScore(expectedLabels = []) {
   return {
-    type: 'llm-rubric',
-    value: `Validate that the assigned labels are from the acceptable set.
-
-ACCEPTABLE LABELS: ${labelsList}
-
-To extract labels from output:
-1. Look at everything after the first comma
-2. For "YES,urgent,meeting" → labels are: urgent, meeting
-3. For "NO,informational" → label is: informational
-4. For "YES" or "NO" → no labels assigned
-
-PASS CRITERIA:
-${expectedLabels.length === 0 
-  ? 'Output must be only "YES" or "NO" with no labels.' 
-  : `PASS if: Every label in the output is from this set: ${labelsList}
-
-Example acceptable outputs:
-- YES,${expectedLabels[0]}
-- YES,${expectedLabels.length > 1 ? expectedLabels[1] : expectedLabels[0]}
-- YES,${expectedLabels.join(',')}
-- NO (no labels needed)
-FAIL if: Any label in output is NOT in the acceptable set.`}`
+    type: 'javascript',
+    value: `
+      const outputText = (output || '').trim();
+      const parts = outputText.split(',');
+      const outputLabels = parts.slice(1).map(s => s.trim()).filter(Boolean);
+      const expectedLabels = ${JSON.stringify(expectedLabels)};
+      const expectedSet = new Set(expectedLabels);
+      
+      const correctLabels = outputLabels.filter(l => expectedSet.has(l));
+      const totalOutput = outputLabels.length;
+      const totalExpected = expectedLabels.length;
+      
+      let accuracy = 0;
+      if (totalExpected === 0 && totalOutput === 0) {
+        accuracy = 100;
+      } else if (totalExpected === 0) {
+        accuracy = 0;
+      } else {
+        accuracy = Math.round((correctLabels.length / totalOutput) * 100);
+      }
+        console.log('accuracy:', accuracy);
+      
+      const metrics = {
+        accuracy,
+        correctLabels: correctLabels.length,
+        totalExpected,
+        totalOutput,
+        outputLabels,
+        expectedLabels,
+        missingLabels: expectedLabels.filter(l => !outputLabels.includes(l)),
+        extraLabels: outputLabels.filter(l => !expectedSet.has(l))
+      };
+      
+      return {
+        pass: accuracy === 100,
+        score: accuracy / 100,
+        reason: \`Label Accuracy: \${accuracy}% (\${correctLabels.length}/\${totalOutput} correct)\${metrics.missingLabels.length > 0 ? ' | Missing: ' + metrics.missingLabels.join(',') : ''}\${metrics.extraLabels.length > 0 ? ' | Extra: ' + metrics.extraLabels.join(',') : ''}\`,
+        namedScores: {
+          labelAccuracy: accuracy / 100,
+          correctLabels: correctLabels.length,
+          missingLabels: metrics.missingLabels.length,
+          extraLabels: metrics.extraLabels.length
+        }
+      };
+    `
   };
 }
 
@@ -140,5 +162,5 @@ module.exports = {
   translationAccurate,
   classificationFormatValid,
   actionRequirementCorrect,
-  labelsMatchExpected
+  labelAccuracyScore
 };
