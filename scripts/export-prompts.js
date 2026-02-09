@@ -3,6 +3,8 @@ const path = require('path');
 
 const promptsDir = path.join(__dirname, '../prompts');
 const buildDir = path.join(__dirname, '../build');
+const logger = require('../utils/logger');
+const logger = new Logger('export-prompts');
 
 if (!fs.existsSync(buildDir)) {
   fs.mkdirSync(buildDir, { recursive: true });
@@ -33,6 +35,6 @@ fs.writeFileSync(
   path.join(buildDir, 'prompts.json'),
   JSON.stringify(output, null, 2)
 );
-console.log('Generated: prompts.json');
+logger.info('Generated: prompts.json');
 
-console.log('Export complete!');
+logger.info('Export complete!');
