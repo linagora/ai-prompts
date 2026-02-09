@@ -1,11 +1,14 @@
-const availableLabels = `
-- 'urgent' : Requires immediate attention
-- 'meeting' : Related to scheduling or meeting requests
-- 'review' : Requires document or content review
-- 'decision' : Requires approval or decision-making
-- 'informational' : FYI or status update only
-- 'followup' : Follow-up required from recipient
-`;
+const EMAIL_LABELS = [
+  { id: 'urgent', description: 'Requires immediate attention or has a deadline' },
+  { id: 'followup', description: 'Requires a response or later action' },
+  { id: 'meeting', description: 'Related to scheduling or meetings' },
+  { id: 'review', description: 'Requires document or content review' },
+  { id: 'decision', description: 'Requires approval or decision-making' },
+  { id: 'informational', description: 'FYI or status update only' },
+  { id: 'spam', description: 'Promotional or irrelevant content' }
+];
+
+const availableLabels = EMAIL_LABELS.map(l => `- '${l.id}' : ${l.description}`).join('\n');
 
 const emailTestCases = [
   {
@@ -20,12 +23,12 @@ const emailTestCases = [
       subject: 'Q1 Project Report - Your Review Needed',
       body: `Hi John,
 
-I've completed the Q1 project report and need your review before we submit it to management. The document covers all deliverables, timelines, and budget allocation for the quarter.
+        I've completed the Q1 project report and need your review before we submit it to management. The document covers all deliverables, timelines, and budget allocation for the quarter.
 
-Can you please review it by end of day Friday and provide your feedback? Let me know if you have any questions.
+        Can you please review it by end of day Friday and provide your feedback? Let me know if you have any questions.
 
-Thanks,
-Sarah`
+        Thanks,
+        Sarah`
     },
     
     expectedOutput: {
@@ -45,14 +48,14 @@ Sarah`
       subject: 'Company Newsletter - January 2026',
       body: `Dear Colleagues,
 
-We're excited to share this month's company newsletter with updates on our latest initiatives and achievements.
+        We're excited to share this month's company newsletter with updates on our latest initiatives and achievements.
 
-This month we've launched three new products, expanded our team by 15 people, and reached record revenue targets. Thank you all for your hard work!
+        This month we've launched three new products, expanded our team by 15 people, and reached record revenue targets. Thank you all for your hard work!
 
-For more details, please visit our internal portal.
+        For more details, please visit our internal portal.
 
-Best regards,
-HR Team`
+        Best regards,
+        HR Team`
     },
     
     expectedOutput: {
@@ -72,14 +75,14 @@ HR Team`
       subject: 'URGENT: Client Meeting Tomorrow at 2 PM',
       body: `Robert,
 
-We have an urgent client meeting scheduled for tomorrow at 2 PM to discuss contract renewals. Your presence is critical as you lead the technical implementation.
+        We have an urgent client meeting scheduled for tomorrow at 2 PM to discuss contract renewals. Your presence is critical as you lead the technical implementation.
 
-Please confirm your attendance immediately and prepare a summary of current project status.
+        Please confirm your attendance immediately and prepare a summary of current project status.
 
-This is time-sensitive.
+        This is time-sensitive.
 
-Best,
-Director`
+        Best,
+        Director`
     },
     
     expectedOutput: {
@@ -99,12 +102,12 @@ Director`
       subject: 'Critical Bug Report - Database Connection Issue',
       body: `Hi Alice,
 
-We've identified a critical bug in the production environment affecting database connections. The system is currently down for 500+ users.
+        We've identified a critical bug in the production environment affecting database connections. The system is currently down for 500+ users.
 
-We need you to patch this as soon as possible. Can you deploy the fix by 10 AM tomorrow? Please confirm receipt and estimated time to fix.
+        We need you to patch this as soon as possible. Can you deploy the fix by 10 AM tomorrow? Please confirm receipt and estimated time to fix.
 
-Regards,
-Support Team`
+        Regards,
+        Support Team`
     },
     
     expectedOutput: {
@@ -124,16 +127,16 @@ Support Team`
       subject: 'Weekly Status Update - Week 5',
       body: `Team,
 
-Here's this week's status update:
+        Here's this week's status update:
 
-  Backend API completed
-  Database migration finished
-  Frontend development in progress
-  Testing phase scheduled for next week
+          Backend API completed
+          Database migration finished
+          Frontend development in progress
+          Testing phase scheduled for next week
 
-All deliverables are on track. No blockers at this time.
+        All deliverables are on track. No blockers at this time.
 
-Thanks for the great work!`
+        Thanks for the great work!`
     },
     
     expectedOutput: {
@@ -170,22 +173,23 @@ Thanks for the great work!`
 
 function formatEmailForClassification(emailData) {
   return `Username (of the person receiving this mail) is ${emailData.username}. His/her mail address is ${emailData.email}.
-Below is the content of the email:
+    Below is the content of the email:
 
-From: ${emailData.from}
-To: ${emailData.to}
-Subject: ${emailData.subject}
+    From: ${emailData.from}
+    To: ${emailData.to}
+    Subject: ${emailData.subject}
 
-Body:
-${emailData.body}
+    Body:
+    ${emailData.body}
 
-## AVAILABLE LABELS
-${availableLabels}`;
+    ## AVAILABLE LABELS
+    ${availableLabels}`;
 }
 
 module.exports = {
   emailTestCases,
   availableLabels,
-  formatEmailForClassification
+  formatEmailForClassification,
+  EMAIL_LABELS
 };
 
