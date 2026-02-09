@@ -127,7 +127,6 @@ function labelAccuracyScore(expectedLabels = []) {
       } else {
         accuracy = Math.round((correctLabels.length / totalOutput) * 100);
       }
-        console.log('accuracy:', accuracy);
       
       const metrics = {
         accuracy,

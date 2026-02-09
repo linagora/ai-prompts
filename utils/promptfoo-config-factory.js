@@ -1,5 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
+const Logger = require('../utils/logger');
+const logger = new Logger('promptfoo-config');
 
 /**
  * Load prompts from a specific directory
@@ -38,7 +40,7 @@ function loadPromptsFromDir(promptsDir, logLabel, recursive = false) {
   }
   
   scanDir(promptsDir);
-  console.log(`🟢 Loaded ${prompts.length} ${logLabel}`);
+  logger.info(`🟢 Loaded ${prompts.length} ${logLabel}`);
   return prompts;
 }
 
@@ -80,7 +82,7 @@ function loadTestsFromDir(promptsDir, logLabel, recursive = false) {
   }
   
   scanDir(promptsDir);
-  console.log(`🟢 Prepared ${tests.length} ${logLabel}`);
+  logger.info(`🟢 Prepared ${tests.length} ${logLabel}`);
   return tests;
 }
 
