@@ -13,7 +13,7 @@ module.exports = {
     {
       role: 'user',
       content: `INSTRUCTION:
-{{ task }}
+{{task}}
 
 TEXT:
 {{input}}`
