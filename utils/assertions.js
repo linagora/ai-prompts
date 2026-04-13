@@ -56,6 +56,7 @@ function translationAccurate(targetLanguage) {
   };
 }
 
+// deprecated - use classificationFormatValidV2 instead because we will be handling needs action as a label instead of separate field in the output
 /**
  * Assert that email classification output has correct format
  */
@@ -89,6 +90,7 @@ function classificationFormatValid() {
   };
 }
 
+// deprecated - this function have no use because we will be handling needs action as a label instead of separate field in the output
 /**
  * Assert that action requirement is correct
  * @param {string} expectedAction - Expected action: 'YES' or 'NO'
@@ -110,6 +112,7 @@ function actionRequirementCorrect(expectedAction) {
   };
 }
 
+// deprecated - use labelAccuracyScoreV2 instead because we will be handling needs action as a label instead of separate field in the output
 /**
  * Calculate label accuracy with detailed metrics
  * @param {string[]} expectedLabels - Expected labels for this test case
@@ -163,6 +166,85 @@ function labelAccuracyScore(expectedLabels = []) {
   };
 }
 
+/**
+ * Calculate label accuracy with detailed metrics
+ * @param {string[]} expectedLabels - Expected labels for this test case
+ * @returns {Object} PromptFoo assertion with javascript function
+ */
+function labelAccuracyScoreV2(expectedLabels = []) {
+  return {
+    type: 'javascript',
+    value: `
+      const outputText = (output || '').trim();
+      const parts = outputText.split(',');
+      const outputLabels = parts.map(s => s.trim()).filter(Boolean);
+      const expectedLabels = ${JSON.stringify(expectedLabels)};
+      const expectedSet = new Set(expectedLabels);
+      
+      const correctLabels = outputLabels.filter(l => expectedSet.has(l));
+      const totalExpected = expectedLabels.length;
+      
+      let accuracy = 0;
+      if (totalExpected === 0 && correctLabels.length === 0) {
+        accuracy = 100;
+      } else if (totalExpected === 0) {
+        accuracy = 0;
+      } else {
+        accuracy = Math.round((correctLabels.length / totalExpected) * 100);
+      }
+      
+      const metrics = {
+        accuracy,
+        correctLabels: correctLabels.length,
+        totalExpected,
+        outputLabels,
+        expectedLabels,
+        missingLabels: expectedLabels.filter(l => !outputLabels.includes(l)),
+        extraLabels: outputLabels.filter(l => !expectedSet.has(l))
+      };
+      
+      return {
+        pass: correctLabels.length === totalExpected && metrics.missingLabels.length === 0,
+        score: accuracy / 100,
+        reason: 'Label Accuracy: ' + accuracy + '% (' + correctLabels.length + '/' + totalExpected + ' correct)' + (metrics.missingLabels.length > 0 ? ' | Missing: ' + metrics.missingLabels.join(',') : '') + (metrics.extraLabels.length > 0 ? ' | Extra: ' + metrics.extraLabels.join(',') : ''),
+        namedScores: {
+          labelAccuracy: accuracy / 100,
+          correctLabels: correctLabels.length,
+          totalExpected: totalExpected,
+          missingLabels: metrics.missingLabels.length,
+          extraLabels: metrics.extraLabels.length
+        }
+      };
+    `
+  };
+}
+
+/**
+ * Assert that email classification output has correct format
+ */
+function classificationFormatValidV2() {
+  return {
+    type: 'javascript',
+    value: `
+      const outputText = (output || '').trim();
+      
+      if (!outputText) {
+        return { pass: false, score: 0, reason: 'Output is empty' };
+      }
+      
+      if (outputText.includes('\\n')) {
+        return { pass: false, score: 0, reason: 'Output contains multiple lines' };
+      }
+      
+      if (outputText.includes(', ')) {
+        return { pass: false, score: 0, reason: 'Output has spaces after commas' };
+      }
+      
+      return { pass: true, score: 1, reason: 'Format is valid' };
+    `
+  };
+}
+
 module.exports = {
   noTranslation,
   noExtraInfo,
@@ -170,5 +252,8 @@ module.exports = {
   translationAccurate,
   classificationFormatValid,
   actionRequirementCorrect,
-  labelAccuracyScore
+  labelAccuracyScore,
+  labelAccuracyScoreV2,
+  classificationFormatValidV2
+  
 };
