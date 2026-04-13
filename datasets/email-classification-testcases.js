@@ -1,16 +1,87 @@
 const EMAIL_LABELS = [
-  { id: 'urgent', description: 'Requires immediate attention or has a deadline' },
-  { id: 'followup', description: 'Requires a response or later action' },
-  { id: 'meeting', description: 'Related to scheduling or meetings' },
-  { id: 'review', description: 'Requires document or content review' },
-  { id: 'decision', description: 'Requires approval or decision-making' },
-  { id: 'informational', description: 'FYI or status update only' },
-  { id: 'spam', description: 'Promotional or irrelevant content' }
+  { id: 'urgent', description: 'This email has an urgent message' },
+  { id: 'important', description: 'This include an important matter and should be treated with care' },
+  { id: 'meeting', description: 'This includes a meeting invitation' },
+  { id: 'AI', description: 'The topic is about to Artificial Intelligence (AI)' },
+  { id: 'informational', description: 'FYI only' },
+
+  //this label aim to test performance when detailed description for needs action is provided inside the label description
+  // { 
+  //   id: 'action_required', 
+  //   description: 'Apply ONLY if the email contains a clear and direct request requiring a specific action from the recipient (e.g. reply, provide information, approve, complete a task, or explicitly respond). The request must be addressed to the recipient and create a clear obligation to act. Do NOT apply to newsletters, marketing emails, automated messages (no-reply, notifications, alerts), meeting invitations without required response, or informational content. Do NOT apply if the action is optional, implicit, or unclear. Most emails do NOT require action.' 
+  // }
+
+  { id: 'action_required', description: 'Explicit action required' }
 ];
 
 const availableLabels = EMAIL_LABELS.map(l => `- '${l.id}' : ${l.description}`).join('\n');
 
 const emailTestCases = [
+  {
+    id: '01',
+    description: 'Anthropic Claude.ai magic link',
+    input: {
+      username: 'Alice',
+      email: 'john@example.com',
+      from: 'no-reply-1HwqilCCQ9WelWV3HgwFTw@mail.anthropic.com',
+      to: 'accounts+claude@sonadresse.com',
+      subject: 'Lien sécurisé pour vous connecter à Claude.ai',
+      body: `Connectez-vous à Claude.ai avec le lien sécurisé ci-dessous. Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité.`
+    },
+    expectedOutput: { labels: [] }
+  },
+  {
+    id: '02',
+    description: 'Atlassian Cloud migration maturity test',
+    input: {
+      username: 'John',
+      email: 'john@example.com',
+      from: 'communication@spectrumgroupe.fr',
+      to: 'john@example.com',
+      subject: 'John Testez votre maturité cloud en 4 minutes!',
+      body: `Bonjour John, Migrer vers le Cloud Atlassian ne se résume plus à un simple projet technique. Accédez à une vision claire et personnalisée de votre trajectoire Cloud via notre simulateur intelligent.`
+    },
+    expectedOutput: { labels: [] }
+  },
+  {
+    id: '03',
+    description: 'Open Source Experience launch webinar invitation',
+    input: {
+      username: 'John',
+      email: 'john@example.com',
+      from: 'contact@opensource-experience.com',
+      to: 'john@example.com',
+      subject: 'Rendez-vous ce jeudi pour notre webinar de lancement',
+      body: `30 minutes d'efficacité pour tout savoir sur l'édition 2026 d'Open Source Experience. Rendez-vous le 09 avril de 9h30 à 10h. Je m'inscris.`
+    },
+    expectedOutput: { labels: [] }
+  },
+  {
+    id: '04',
+    description: 'New Android build for Visio Mobile',
+    input: {
+      username: 'john',
+      email: 'john@example.com',
+      from: 'firebase-noreply@google.com',
+      to: 'john@example.com',
+      subject: 'Visio Mobile 0.9.0 (88) for Android is ready to test',
+      body: `v0.9.0 - Smart subscriptions, layout engine, chat encryption, feature flags. Download the latest build for testing.`
+    },
+    expectedOutput: { labels: [] }
+  },
+  {
+    id: '05',
+    description: 'n8n security updates opt-in request',
+    input: {
+      username: 'John',
+      email: 'john@example.com',
+      from: 'security@info.n8n.io',
+      to: 'john@example.com',
+      subject: "You haven't been receiving security advisories",
+      body: `Hi'John, As a self-hosted n8n user, you haven't been receiving security advisories due to a technical issue. If you'd like to receive them going forward, you can opt in below.`
+    },
+    expectedOutput: { labels: ['action_required'] }
+  },
   {
     id: 'project-review',
     description: 'Email requiring action - project review needed',
@@ -31,10 +102,7 @@ const emailTestCases = [
         Sarah`
     },
     
-    expectedOutput: {
-      action: 'YES',
-      labels: ['review', 'followup', 'urgent']
-    }
+    expectedOutput: { labels: ['action_required', 'important'] }
   },
   {
     id: 'newsletter',
@@ -60,37 +128,10 @@ const emailTestCases = [
     
     expectedOutput: {
       action: 'NO',
-      labels: ['informational']
+      labels: []
     }
   },
-  {
-    id: 'urgent-meeting',
-    description: 'Email requiring urgent action - meeting request',
-    
-    input: {
-      username: 'Robert Chen',
-      email: 'robert.chen@company.com',
-      from: 'director@company.com',
-      to: 'robert.chen@company.com',
-      subject: 'URGENT: Client Meeting Tomorrow at 2 PM',
-      body: `Robert,
-
-        We have an urgent client meeting scheduled for tomorrow at 2 PM to discuss contract renewals. Your presence is critical as you lead the technical implementation.
-
-        Please confirm your attendance immediately and prepare a summary of current project status.
-
-        This is time-sensitive.
-
-        Best,
-        Director`
-    },
-    
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'meeting', 'followup']
-    }
-  },
-  {
+    {
     id: 'bug-report',
     description: 'Email requiring action - bug report with follow-up needed',
     
