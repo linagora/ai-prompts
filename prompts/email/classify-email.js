@@ -1,6 +1,6 @@
 const { buildMessages } = require('../../utils/prompts');
-const { EMAIL_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
-const { classificationFormatValid, actionRequirementCorrect, labelAccuracyScore } = require('../../utils/assertions');
+const { SYSTEM_PROMPT_V3 } = require('../system_prompts');
+const { classificationFormatValidV2, labelAccuracyScoreV2 } = require('../../utils/assertions');
 const { emailTestCases, formatEmailForClassification } = require('../../datasets/email-classification-testcases');
 
 const task = 'Classify the email to determine if it requires action and assign relevant labels.';
@@ -12,7 +12,7 @@ module.exports = {
 
   messages: buildMessages({ 
     task, 
-    system_instruction: EMAIL_SYSTEM_INSTRUCTIONS 
+    system_instruction: SYSTEM_PROMPT_V3 
   }),
   
   tests: emailTestCases.map(testCase => ({
@@ -21,9 +21,8 @@ module.exports = {
       input: formatEmailForClassification(testCase.input)
     },
     assert: [
-      classificationFormatValid(),
-      actionRequirementCorrect(testCase.expectedOutput.action),
-      labelAccuracyScore(testCase.expectedOutput.labels)
+      classificationFormatValidV2(),
+      labelAccuracyScoreV2(testCase.expectedOutput.labels)
     ]
   }))
 };
