@@ -5,8 +5,6 @@ const logger = new Logger('export-prompts');
 
 const promptsDir = path.join(__dirname, '../prompts');
 const buildDir = path.join(__dirname, '../build');
-const logger = require('../utils/logger');
-const logger = new Logger('export-prompts');
 
 if (!fs.existsSync(buildDir)) {
   fs.mkdirSync(buildDir, { recursive: true });

@@ -80,7 +80,7 @@ const emailTestCases = [
       subject: "You haven't been receiving security advisories",
       body: `Hi Van, As a self-hosted n8n user, you haven't been receiving security advisories due to a technical issue. If you'd like to receive them going forward, you can opt in below.`
     },
-    expectedOutput: { labels: ['action_required'] }
+    expectedOutput: { labels: [] }
   },
   {
     id: 'project-review',
@@ -153,7 +153,7 @@ const emailTestCases = [
     
     expectedOutput: {
       action: 'YES',
-      labels: ['urgent', 'followup']
+      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -207,7 +207,7 @@ const emailTestCases = [
     
     expectedOutput: {
       action: 'YES',
-      labels: ['decision', 'review', 'urgent']
+      labels: ['important', 'action_required', 'urgent']
     }
   }
 ];
