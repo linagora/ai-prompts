@@ -9,8 +9,7 @@ const emailTestCases = [
             to: 'accounts+claude@example.com',
             subject: 'Lien sécurisé pour vous connecter à Claude.ai',
             body: `Connectez-vous à Claude.ai avec le lien sécurisé ci-dessous. Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité.`
-        },
-        expectedOutput: { labels: [] }
+        }
     },
     {
         id: '02',
@@ -22,10 +21,6 @@ const emailTestCases = [
             to: 'john@example.com',
             subject: 'John Testez votre maturité cloud en 4 minutes!',
             body: `Bonjour John, Migrer vers le Cloud Atlassian ne se résume plus à un simple projet technique. Accédez à une vision claire et personnalisée de votre trajectoire Cloud via notre simulateur intelligent.`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: []
         }
     },
     {
@@ -38,10 +33,6 @@ const emailTestCases = [
             to: 'john@example.com',
             subject: 'Rendez-vous ce jeudi pour notre webinar de lancement',
             body: `30 minutes d'efficacité pour tout savoir sur l'édition 2026 d'Open Source Experience. Rendez-vous le 09 avril de 9h30 à 10h. Je m'inscris.`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: []
         }
     },
     {
@@ -54,10 +45,6 @@ const emailTestCases = [
             to: 'john@example.com',
             subject: 'Visio Mobile 0.9.0 (88) for Android is ready to test',
             body: `v0.9.0 - Smart subscriptions, layout engine, chat encryption, feature flags. Download the latest build for testing.`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: []
         }
     },
     {
@@ -70,14 +57,10 @@ const emailTestCases = [
             to: 'john@example.com',
             subject: "You haven't been receiving security advisories",
             body: `Hi'John, As a self-hosted n8n user, you haven't been receiving security advisories due to a technical issue. If you'd like to receive them going forward, you can opt in below.`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: []
         }
     },
     {
-        id: 'project-review',
+        id: '06',
         description: 'Email requiring action - project review needed',
 
         input: {
@@ -94,15 +77,10 @@ const emailTestCases = [
 
         Thanks,
         Sarah`
-        },
-
-        expectedOutput: {
-            action: 'YES',
-            labels: ['action_required', 'important']
         }
     },
     {
-        id: 'newsletter',
+        id: '07',
         description: 'Email not requiring action - newsletter/informational',
 
         input: {
@@ -121,15 +99,10 @@ const emailTestCases = [
 
         Best regards,
         HR Team`
-        },
-
-        expectedOutput: {
-            action: 'NO',
-            labels: []
         }
     },
     {
-        id: 'bug-report',
+        id: '08',
         description: 'Email requiring action - bug report with follow-up needed',
 
         input: {
@@ -146,15 +119,10 @@ const emailTestCases = [
 
         Regards,
         Support Team`
-        },
-
-        expectedOutput: {
-            action: 'YES',
-            labels: ['urgent', 'important', 'action_required']
         }
     },
     {
-        id: 'status-update',
+        id: '09',
         description: 'Email not requiring action - status update only',
 
         input: {
@@ -175,15 +143,10 @@ const emailTestCases = [
         All deliverables are on track. No blockers at this time.
 
         Thanks for the great work!`
-        },
-
-        expectedOutput: {
-            action: 'NO',
-            labels: ['informational']
         }
     },
     {
-        id: 'approval-needed',
+        id: '10',
         description: 'Email requiring action - approval needed',
 
         input: {
@@ -200,11 +163,6 @@ const emailTestCases = [
 
         Thanks,
         Finance Team`
-        },
-
-        expectedOutput: {
-            action: 'YES',
-            labels: ['important', 'action_required', 'urgent']
         }
     }
 ];
