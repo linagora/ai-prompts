@@ -7,7 +7,7 @@ CRITICAL RULES (must be followed strictly):
 3. Do NOT add any new content beyond what is required by the instruction. Never say things like "Here is the result" or "Sure". Just answer the instruction.
 4. PRESERVE the original language of the input text. For example, if it's French, keep French. If it's English, keep English. ONLY change the language if the instruction EXPLICITLY asks for a translation to another language.`
 
-// deprecated - use EMAIL_SYSTEM_INSTRUCTIONS instead because we will be handling needs action as a label instead of separate field in the output
+// deprecated - use EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELSinstead because we will be handling needs action as a label instead of separate field in the output
 const EMAIL_SYSTEM_INSTRUCTIONS_WITH_ACTION_FIELD = `You are an email classification assistant.
         ## TASK 1: Action Classification
         Determine if the email requires the recipient to take action.
@@ -66,7 +66,7 @@ const EMAIL_SYSTEM_INSTRUCTIONS_WITH_ACTION_FIELD = `You are an email classifica
         **Return ONLY the formatted output. No explanations, no additional text.**`;
 
 // version 1 :false positive results
-const EMAIL_SYSTEM_INSTRUCTIONS = `Analyze the email and select labels that best match its content and intent.
+const EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1= `Analyze the email and select labels that best match its content and intent.
 
         Selection criteria:
         - Only assign a label when you are highly confident it applies — when in doubt, omit it
@@ -85,7 +85,7 @@ const EMAIL_SYSTEM_INSTRUCTIONS = `Analyze the email and select labels that best
         Return ONLY the label IDs. No explanations.`;
 
 // version 2: improved precision for action_required label by providing more detailed instruction and examples
-const SYSTEM_PROMPT_V2 = `
+const EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V2 = `
     You are an email classifier. given a list of available labels, your task is to assign the most appropriate labels to an email based on its content and intent.
     use only labels provided later with their descriptions.
 
@@ -121,7 +121,7 @@ const SYSTEM_PROMPT_V2 = `
 
 
 // version 3: further improved precision for action_required label by providing even more detailed instruction and examples, and emphasizing the importance of avoiding false positives for this label
-const SYSTEM_PROMPT_V3 = `                                                                                                                                                                   
+const EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V3 = `                                                                                                                                                                   
          You are an email classifier. Assign labels based on topic, intent, and category — not surface keywords.                                                                                                               
                                                                                                                                                                                                                                
          RULES                                                                                                                                                                                                                 
@@ -145,8 +145,8 @@ const SYSTEM_PROMPT_V3 = `
 
 module.exports = {
   SCRIBE_SYSTEM_INSTRUCTIONS,
-  EMAIL_SYSTEM_INSTRUCTIONS,
   EMAIL_SYSTEM_INSTRUCTIONS_WITH_ACTION_FIELD,
-  SYSTEM_PROMPT_V2,
-  SYSTEM_PROMPT_V3,
+  EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1,
+  EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V2,
+  EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V3,
 };

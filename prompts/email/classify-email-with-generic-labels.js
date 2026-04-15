@@ -1,6 +1,6 @@
 const { buildMessages } = require('../../utils/prompts');
-const { EMAIL_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
-const { classificationFormatValidV2, labelAccuracyScoreV2 } = require('../../utils/assertions');
+const { EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1} = require('../system_prompts');
+const { classificationFormatValidForGenericLabels, labelAccuracyScoreForGenericLabels } = require('../../utils/assertions');
 const { emailTestCasesExtended } = require('../../datasets/large-email-dataset');
 const { formatEmailForClassification } = require('../../datasets/email-classification-testcases');
 
