@@ -34,6 +34,10 @@ Available prompts are in the `prompts/` directory.
 
 Create a file in `prompts/` following the existing pattern. See [AGENTS.md](AGENTS.md) for details.
 
+## Label classification evaluation 
+
+This evaluation focuses on classifying emails based on whether they require action and assigning relevant labels. The evaluation compares different prompt strategies to determine which approach yields the best performance in terms of accuracy and clarity. See [LABEL_CLASSIFICATION.md](/prompts/email/LABEL_CLASSIFICATION.md) for details
+
 ## License
 
 AGPL-3.0
