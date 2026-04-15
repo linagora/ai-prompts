@@ -6,6 +6,8 @@
   "scripts": {
     "eval": "npm run eval:scribe && npm run eval:email",
     "eval:email": "promptfoo eval -c promptfooconfig.email.js",
+    "eval:email:small": "EMAIL_DATASET=small npm run eval:email",
+    "eval:email:large": "EMAIL_DATASET=large npm run eval:email",
     "eval:scribe": "promptfoo eval -c promptfooconfig.scribe.js",
     "view": "promptfoo view",
     "eval-ci": "PROMPTFOO_REQUEST_BACKOFF_MS=5000 promptfoo eval -o results.json -o report.html --verbose && node scripts/eval-summary.js",
