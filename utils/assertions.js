@@ -60,7 +60,7 @@ function translationAccurate(targetLanguage) {
 /**
  * Assert that email classification output has correct format
  */
-function classificationFormatValid() {
+function classificationFormatValidWithActionRequired() {
   return {
     type: 'javascript',
     value: `
@@ -90,12 +90,12 @@ function classificationFormatValid() {
   };
 }
 
-// deprecated - this function have no use because we will be handling needs action as a label instead of separate field in the output
+// deprecated - this function will have no use because we will be handling needs action as a label instead of separate field in the output
 /**
  * Assert that action requirement is correct
  * @param {string} expectedAction - Expected action: 'YES' or 'NO'
  */
-function actionRequirementCorrect(expectedAction) {
+function actionRequirementCorrectWithActionRequired(expectedAction) {
   return {
     type: 'javascript',
     value: `
@@ -118,7 +118,7 @@ function actionRequirementCorrect(expectedAction) {
  * @param {string[]} expectedLabels - Expected labels for this test case
  * @returns {Object} PromptFoo assertion with javascript function
  */
-function labelAccuracyScore(expectedLabels = []) {
+function labelAccuracyScoreWithActionRequired(expectedLabels = []) {
   return {
     type: 'javascript',
     value: `
@@ -171,7 +171,7 @@ function labelAccuracyScore(expectedLabels = []) {
  * @param {string[]} expectedLabels - Expected labels for this test case
  * @returns {Object} PromptFoo assertion with javascript function
  */
-function labelAccuracyScoreV2(expectedLabels = []) {
+function labelAccuracyScoreForGenericLabels(expectedLabels = []) {
   return {
     type: 'javascript',
     value: `
@@ -222,7 +222,7 @@ function labelAccuracyScoreV2(expectedLabels = []) {
 /**
  * Assert that email classification output has correct format
  */
-function classificationFormatValidV2() {
+function classificationFormatValidForGenericLabels() {
   return {
     type: 'javascript',
     value: `
@@ -250,10 +250,10 @@ module.exports = {
   noExtraInfo,
   meaningPreserved,
   translationAccurate,
-  classificationFormatValid,
-  actionRequirementCorrect,
-  labelAccuracyScore,
-  labelAccuracyScoreV2,
-  classificationFormatValidV2
+  classificationFormatValidWithActionRequired,
+  actionRequirementCorrectWithActionRequired,
+  labelAccuracyScoreWithActionRequired,
+  labelAccuracyScoreForGenericLabels,
+  classificationFormatValidForGenericLabels
   
 };
