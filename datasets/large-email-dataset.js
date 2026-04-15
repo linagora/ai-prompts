@@ -10,10 +10,6 @@ const emailTestCasesExtended = [
       to: 'laura.king@company.com',
       subject: 'URGENT: Production Outage - Client Impact',
       body: 'Hi Laura,\n\nWe are currently experiencing a full production outage that is heavily impacting our clients. We have an emergency bridge scheduled for 3 PM today to coordinate the response. A patch is required immediately to restore service.\n\nPlease join the bridge as soon as possible.\n\nBest regards,\nOperations Team'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'meeting', 'action_required']
     }
   },
   {
@@ -26,10 +22,6 @@ const emailTestCasesExtended = [
       to: 'david.ross@company.com',
       subject: 'Invoice #4582 Pending',
       body: 'Hello David,\n\nI hope you are having a good week. This is a reminder to process the payment for the attached invoice (#4582) before the due date this Friday. We need this cleared to avoid any service interruptions.\n\nThanks,\nAccounts Payable'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'action_required']
     }
   },
   {
@@ -42,10 +34,18 @@ const emailTestCasesExtended = [
       to: 'nina.patel@company.com',
       subject: 'Reminder: Strategy Sync Tomorrow',
       body: 'Hi Nina,\n\nJust a quick reminder about our strategy sync meeting scheduled for tomorrow at 10 AM. We will be reviewing the Q3 goals. No specific preparation is needed, but your presence is appreciated.\n\nSee you then,\nOffice Assistant'
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'informational']
+    }
+  },
+  {
+    id: '004',
+    description: 'New Android build for Visio Mobile',
+    input: {
+      username: 'john',
+      email: 'john@example.com',
+      from: 'firebase-noreply@google.com',
+      to: 'john@example.com',
+      subject: 'Visio Mobile 0.9.0 (88) for Android is ready to test',
+      body: `v0.9.0 - Smart subscriptions, layout engine, chat encryption, feature flags. Download the latest build for testing.`
     }
   },
   {
@@ -58,10 +58,6 @@ const emailTestCasesExtended = [
       to: 'olivia.white@company.com',
       subject: 'Critical Security Vulnerability Identified',
       body: 'Dear Olivia,\n\nOur automated scanners have identified a critical vulnerability in the authentication module. This poses a significant risk to user data. An immediate fix is required to secure the environment.\n\nPlease acknowledge receipt of this email and provide an ETA for the patch.\n\nRegards,\nSecurity Team'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -74,10 +70,6 @@ const emailTestCasesExtended = [
       to: 'ryan.scott@company.com',
       subject: 'Double Your Income Fast!',
       body: 'Hey Ryan,\n\nDo you want to double your income? Invest in our new AI-driven crypto platform today and earn guaranteed profits. This is a limited time offer!\n\nClick here to start,\nThe FastCrypto Team'
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['AI', 'informational']
     }
   },
   {
@@ -90,10 +82,6 @@ const emailTestCasesExtended = [
       to: 'henry.collins@company.com',
       subject: 'Urgent Data Export Required',
       body: 'Hi Henry,\n\nOne of our key clients urgently needs a full data export before their compliance audit tomorrow morning. We need to get this to them by the end of today to remain within our SLA.\n\nCan you please prioritize this request?\n\nThanks,\nSupport Team'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -106,10 +94,6 @@ const emailTestCasesExtended = [
       to: 'victor.morales@company.com',
       subject: 'Critical Authentication Bug',
       body: 'Hello Victor,\n\nDuring load testing, we discovered that the authentication module is failing under high traffic. This is a blocker for the upcoming release. We need an immediate fix to continue with the deployment schedule.\n\nBest,\nQA Team'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -122,10 +106,6 @@ const emailTestCasesExtended = [
       to: 'elena.woods@company.com',
       subject: 'Strategic Direction Decision Required',
       body: 'Dear Elena,\n\nWe are reaching a deadline for the board presentation. We need your final decision on the international expansion strategy by tomorrow EOD so we can finalize the slides.\n\nThank you,\nStrategy Group'
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'action_required']
     }
   },
   {
@@ -146,10 +126,6 @@ This is a major shift for us, and I want to ensure our strategy is sound before 
 Best regards,
 Mark Thompson
 Technical Lead`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'AI', 'action_required']
     }
   },
   {
@@ -169,10 +145,6 @@ You must apply the security patch and rotate the access keys immediately to prev
 
 Regards,
 Security Operations Center`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'AI', 'action_required']
     }
   },
   {
@@ -192,10 +164,6 @@ There's no action needed from your side, just wanted to keep everyone in the loo
 
 Enjoy the read!
 Internal Comms Team`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['informational']
     }
   },
   {
@@ -215,10 +183,6 @@ The calendar invite is attached for this Friday at 2:00 PM. Please let us know i
 
 Sincerely,
 Compliance Office`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'AI', 'informational']
     }
   },
   {
@@ -238,10 +202,6 @@ We need you to log in to the console and check the instance health immediately. 
 
 Best,
 The DevOps Team`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -261,10 +221,6 @@ Delays in approval will result in a freeze on new vendor contracts.
 
 Regards,
 Finance Department`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'action_required']
     }
   },
   {
@@ -284,10 +240,6 @@ Let me know what time works best for you.
 
 Cheers,
 Bucky`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['meeting', 'action_required']
     }
   },
   {
@@ -307,10 +259,6 @@ This is just a FYI for your personal development. No response to this newsletter
 
 Best,
 AI Weekly Editors`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['AI', 'informational']
     }
   },
   {
@@ -330,10 +278,6 @@ Please sign the attached DocuSign link within the next hour.
 
 Thank you,
 Legal Team`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -353,10 +297,6 @@ The meeting is set for Wednesday at 11:00 AM in Conference Room B. Please accept
 
 Best,
 Natasha`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'AI', 'informational']
     }
   },
   {
@@ -377,10 +317,6 @@ Please pause the current rollout and adjust the filtering parameters. We need a 
 Regards,
 Theresa Cullen
 Head of QA`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'AI', 'action_required']
     }
   },
   {
@@ -400,10 +336,6 @@ This is just a FYI for anyone planning to come into the office over the weekend.
 
 Best,
 Facilities Management`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['informational']
     }
   },
   {
@@ -424,10 +356,6 @@ The meeting will take place via video call next Tuesday at 10:00 AM. Please let 
 Sincerely,
 Angela Martin
 HR Manager`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'important', 'informational']
     }
   },
   {
@@ -447,10 +375,6 @@ Failure to follow these guidelines could result in significant security risks.
 
 Best regards,
 Legal Compliance Team`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'AI', 'action_required']
     }
   },
   {
@@ -470,10 +394,6 @@ Please confirm once this is done so we can clear the alert.
 
 Thanks,
 IT Security Team`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -493,10 +413,6 @@ No need to reply, just sharing for your information.
 
 Cheers,
 Fox Mulder`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['AI', 'informational']
     }
   },
   {
@@ -516,10 +432,6 @@ Please upload the missing document to the portal by Friday to ensure your paymen
 
 Regards,
 Finance Operations`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'action_required']
     }
   },
   {
@@ -539,10 +451,6 @@ I’ve put a hold on your calendar for Thursday at 4:00 PM. Hope you can make it
 
 Best,
 Pepper`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'AI', 'informational']
     }
   },
   {
@@ -562,10 +470,6 @@ Can you look into their recent support tickets and get back to me within the hou
 
 Thanks,
 Howard Stark`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -585,10 +489,6 @@ Enjoy the long weekend! No action required.
 
 Best regards,
 HR Team`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['informational']
     }
   },
 
@@ -610,10 +510,6 @@ Please upload the report to the compliance folder by Friday afternoon. This is n
 Best regards,
 Gwen Stacy
 Compliance Officer`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'AI', 'action_required']
     }
   },
   {
@@ -633,10 +529,6 @@ I've sent a calendar invite for Monday at 9:00 AM. Your input on the final alloc
 
 Cheers,
 Lucius`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'AI', 'informational']
     }
   },
   {
@@ -656,10 +548,6 @@ This is an FYI for everyone to be aware of the changes. No specific response is 
 
 Best,
 HR Department`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['informational']
     }
   },
   {
@@ -680,10 +568,6 @@ We need a hotfix deployed within the next few hours. Please let us know once you
 Regards,
 Scott Summers
 Customer Success`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'action_required']
     }
   },
   {
@@ -703,10 +587,6 @@ Looking forward to seeing you there.
 
 Best,
 Hank McCoy`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['meeting', 'AI', 'informational']
     }
   },
   {
@@ -726,10 +606,6 @@ We need your response by Wednesday to avoid any downtime.
 
 Thanks,
 IT Team`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['important', 'action_required']
     }
   },
   {
@@ -749,10 +625,6 @@ Hope you find it interesting! No action is needed.
 
 Best regards,
 The Tech Trends Team`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['AI', 'informational']
     }
   },
   {
@@ -772,10 +644,6 @@ You must be there. The survival of this partnership depends on it.
 
 Best,
 Pepper`
-    },
-    expectedOutput: {
-      action: 'YES',
-      labels: ['urgent', 'important', 'meeting', 'action_required']
     }
   },
   {
@@ -795,22 +663,18 @@ Welcome aboard, and we look forward to seeing you at the team lunch on Friday. N
 
 Best,
 The Culture Committee`
-    },
-    expectedOutput: {
-      action: 'NO',
-      labels: ['informational']
     }
   },
-   {
-        id: '039',
-        description: 'Urgent security breach in AI database',
-        input: {
-            username: 'Clarice Starling',
-            email: 'clarice.starling@company.com',
-            from: 'cyber-sec@company.com',
-            to: 'clarice.starling@company.com',
-            subject: 'URGENT: Data Breach Detected in AI Training Set',
-            body: `Hi Clarice,
+  {
+    id: '039',
+    description: 'Urgent security breach in AI database',
+    input: {
+      username: 'Clarice Starling',
+      email: 'clarice.starling@company.com',
+      from: 'cyber-sec@company.com',
+      to: 'clarice.starling@company.com',
+      subject: 'URGENT: Data Breach Detected in AI Training Set',
+      body: `Hi Clarice,
 
 We have detected unauthorized access to the server hosting our primary AI training datasets. Sensitive client information may have been exposed. 
 
@@ -818,22 +682,18 @@ We need you to revoke all active API keys and initiate the lockdown protocol imm
 
 Regards,
 Security Response Team`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['urgent', 'important', 'AI', 'action_required']
-        }
-    },
-    {
-        id: '040',
-        description: 'Urgent AI server overheat alert',
-        input: {
-            username: 'Victor Stone',
-            email: 'victor.stone@company.com',
-            from: 'hardware-monitor@system.com',
-            to: 'victor.stone@company.com',
-            subject: 'URGENT: Hardware Critical Temperature - AI Node 04',
-            body: `Hi Victor,
+    }
+  },
+  {
+    id: '040',
+    description: 'Urgent AI server overheat alert',
+    input: {
+      username: 'Victor Stone',
+      email: 'victor.stone@company.com',
+      from: 'hardware-monitor@system.com',
+      to: 'victor.stone@company.com',
+      subject: 'URGENT: Hardware Critical Temperature - AI Node 04',
+      body: `Hi Victor,
 
 Our thermal sensors in the Data Center are reporting that AI Node 04 has exceeded 90°C. This is a critical threshold that could lead to permanent hardware damage.
 
@@ -841,22 +701,18 @@ You need to manually offload the current training jobs and initiate a cooling se
 
 Best,
 Systems Monitoring Bot`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['urgent', 'important', 'AI', 'action_required']
-        }
-    },
-    {
-        id: '041',
-        description: 'Action required for laptop refresh',
-        input: {
-            username: 'Barry Allen',
-            email: 'barry.allen@company.com',
-            from: 'it-inventory@company.com',
-            to: 'barry.allen@company.com',
-            subject: 'Action Required: Laptop Hardware Refresh Cycle',
-            body: `Hello Barry,
+    }
+  },
+  {
+    id: '041',
+    description: 'Action required for laptop refresh',
+    input: {
+      username: 'Barry Allen',
+      email: 'barry.allen@company.com',
+      from: 'it-inventory@company.com',
+      to: 'barry.allen@company.com',
+      subject: 'Action Required: Laptop Hardware Refresh Cycle',
+      body: `Hello Barry,
 
 Your current workstation has reached its 3-year limit and is now eligible for a hardware refresh. 
 
@@ -864,22 +720,18 @@ Please select your preferred replacement model from the attached list and submit
 
 Thanks,
 IT Procurement`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['important', 'action_required']
-        }
-    },
-    {
-        id: '042',
-        description: 'Meeting invitation for AI model demo',
-        input: {
-            username: 'Arthur Curry',
-            email: 'arthur.curry@company.com',
-            from: 'research-team@company.com',
-            to: 'arthur.curry@company.com',
-            subject: 'Invitation: Deep-Sea AI Vision Model Demo',
-            body: `Hi Arthur,
+    }
+  },
+  {
+    id: '042',
+    description: 'Meeting invitation for AI model demo',
+    input: {
+      username: 'Arthur Curry',
+      email: 'arthur.curry@company.com',
+      from: 'research-team@company.com',
+      to: 'arthur.curry@company.com',
+      subject: 'Invitation: Deep-Sea AI Vision Model Demo',
+      body: `Hi Arthur,
 
 The research team is ready to showcase the results of our latest AI vision model trained on underwater datasets. 
 
@@ -888,22 +740,18 @@ We’ve set up a demo session for Thursday at 11:00 AM. We would love to have yo
 Regards,
 Mera
 Lead Researcher`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: ['meeting', 'AI', 'informational']
-        }
-    },
-    {
-        id: '043',
-        description: 'Important feedback needed on AI ethics draft',
-        input: {
-            username: 'J’onn J’onzz',
-            email: 'jonn.jonzz@company.com',
-            from: 'policy-group@company.com',
-            to: 'jonn.jonzz@company.com',
-            subject: 'Important: Feedback Needed on AI Ethics Charter',
-            body: `Dear J’onn,
+    }
+  },
+  {
+    id: '043',
+    description: 'Important feedback needed on AI ethics draft',
+    input: {
+      username: 'J’onn J’onzz',
+      email: 'jonn.jonzz@company.com',
+      from: 'policy-group@company.com',
+      to: 'jonn.jonzz@company.com',
+      subject: 'Important: Feedback Needed on AI Ethics Charter',
+      body: `Dear J’onn,
 
 We have completed the first draft of the company’s AI Ethics Charter. Given your oversight role, your feedback is essential.
 
@@ -911,22 +759,18 @@ Please review the attached document and provide your comments by Wednesday morni
 
 Sincerely,
 The Policy Committee`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['important', 'AI', 'action_required']
-        }
-    },
-    {
-        id: '044',
-        description: 'Informational maintenance completion',
-        input: {
-            username: 'Hal Jordan',
-            email: 'hal.jordan@company.com',
-            from: 'network-ops@company.com',
-            to: 'all-staff@company.com',
-            subject: 'Network Maintenance Successfully Completed',
-            body: `Hello Team,
+    }
+  },
+  {
+    id: '044',
+    description: 'Informational maintenance completion',
+    input: {
+      username: 'Hal Jordan',
+      email: 'hal.jordan@company.com',
+      from: 'network-ops@company.com',
+      to: 'all-staff@company.com',
+      subject: 'Network Maintenance Successfully Completed',
+      body: `Hello Team,
 
 The scheduled network maintenance on our main servers was completed ahead of schedule this morning. All systems are now fully operational.
 
@@ -934,22 +778,18 @@ No further action is required. Thank you for your patience.
 
 Best regards,
 Network Operations`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: ['informational']
-        }
-    },
-    {
-        id: '045',
-        description: 'Urgent response for budget overspend',
-        input: {
-            username: 'Oliver Queen',
-            email: 'oliver.queen@company.com',
-            from: 'finance@company.com',
-            to: 'oliver.queen@company.com',
-            subject: 'URGENT: Budget Discrepancy Found',
-            body: `Hi Oliver,
+    }
+  },
+  {
+    id: '045',
+    description: 'Urgent response for budget overspend',
+    input: {
+      username: 'Oliver Queen',
+      email: 'oliver.queen@company.com',
+      from: 'finance@company.com',
+      to: 'oliver.queen@company.com',
+      subject: 'URGENT: Budget Discrepancy Found',
+      body: `Hi Oliver,
 
 During our monthly audit, we found a significant overspend in the 'Project Arrow' budget. We need an immediate explanation for these additional expenses.
 
@@ -958,22 +798,18 @@ Please provide a detailed breakdown by the end of the day. This is an urgent mat
 Thanks,
 Felicity Smoak
 Finance Lead`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['urgent', 'important', 'action_required']
-        }
-    },
-    {
-        id: '046',
-        description: 'Meeting invite for AI partnership',
-        input: {
-            username: 'Shuri Udaku',
-            email: 'shuri@company.com',
-            from: 'biz-dev@external.com',
-            to: 'shuri@company.com',
-            subject: 'Meeting Invite: Strategic AI Collaboration',
-            body: `Dear Shuri,
+    }
+  },
+  {
+    id: '046',
+    description: 'Meeting invite for AI partnership',
+    input: {
+      username: 'Shuri Udaku',
+      email: 'shuri@company.com',
+      from: 'biz-dev@external.com',
+      to: 'shuri@company.com',
+      subject: 'Meeting Invite: Strategic AI Collaboration',
+      body: `Dear Shuri,
 
 We are very interested in exploring a partnership regarding your AI vibranium-processing algorithms. 
 
@@ -981,22 +817,18 @@ Would you be available for an introductory meeting next Tuesday at 3:00 PM to di
 
 Best regards,
 Everett Ross`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: ['meeting', 'AI', 'informational']
-        }
-    },
-    {
-        id: '047',
-        description: 'Action required for security awareness training',
-        input: {
-            username: 'Dick Grayson',
-            email: 'dick.grayson@company.com',
-            from: 'training@company.com',
-            to: 'dick.grayson@company.com',
-            subject: 'Action Required: Mandatory Cybersecurity Training',
-            body: `Hello Dick,
+    }
+  },
+  {
+    id: '047',
+    description: 'Action required for security awareness training',
+    input: {
+      username: 'Dick Grayson',
+      email: 'dick.grayson@company.com',
+      from: 'training@company.com',
+      to: 'dick.grayson@company.com',
+      subject: 'Action Required: Mandatory Cybersecurity Training',
+      body: `Hello Dick,
 
 This is a reminder that you haven't yet completed the mandatory annual cybersecurity training module. 
 
@@ -1004,44 +836,36 @@ Please complete the course and the final quiz by Friday to ensure our compliance
 
 Regards,
 HR Training Team`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['important', 'action_required']
-        }
-    },
-    {
-        id: '048',
-        description: 'Informational AI industry newsletter',
-        input: {
-            username: 'Billy Batson',
-            email: 'billy.batson@company.com',
-            from: 'daily-ai@news.com',
-            to: 'billy.batson@company.com',
-            subject: 'Daily AI: Understanding Large Language Models',
-            body: `Hi Billy,
+    }
+  },
+  {
+    id: '048',
+    description: 'Informational AI industry newsletter',
+    input: {
+      username: 'Billy Batson',
+      email: 'billy.batson@company.com',
+      from: 'daily-ai@news.com',
+      to: 'billy.batson@company.com',
+      subject: 'Daily AI: Understanding Large Language Models',
+      body: `Hi Billy,
 
 In today’s edition, we explore how LLMs are being used to automate code reviews. It’s a great overview for developers and tech enthusiasts alike.
 
 This is just for your information. Have a great day!
 
 The Daily AI Team`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: ['AI', 'informational']
-        }
-    },
-    {
-        id: '049',
-        description: 'Urgent meeting for PR crisis',
-        input: {
-            username: 'Kara Danvers',
-            email: 'kara.danvers@company.com',
-            from: 'comms-director@company.com',
-            to: 'kara.danvers@company.com',
-            subject: 'URGENT MEETING: Media Statement on AI Leak',
-            body: `Kara,
+    }
+  },
+  {
+    id: '049',
+    description: 'Urgent meeting for PR crisis',
+    input: {
+      username: 'Kara Danvers',
+      email: 'kara.danvers@company.com',
+      from: 'comms-director@company.com',
+      to: 'kara.danvers@company.com',
+      subject: 'URGENT MEETING: Media Statement on AI Leak',
+      body: `Kara,
 
 A story is about to break regarding a data leak in our AI department. I’ve scheduled an emergency meeting in 10 minutes to draft our official statement.
 
@@ -1049,22 +873,18 @@ We need your input on the technical specifics before we go live.
 
 Best,
 Cat Grant`
-        },
-        expectedOutput: {
-            action: 'YES',
-            labels: ['urgent', 'important', 'meeting', 'AI', 'action_required']
-        }
-    },
-    {
-        id: '050',
-        description: 'Informational team building photos',
-        input: {
-            username: 'Zatanna Zatara',
-            email: 'zatanna.zatara@company.com',
-            from: 'social-club@company.com',
-            to: 'all-staff@company.com',
-            subject: 'Photos from Last Night’s Event',
-            body: `Hello Team,
+    }
+  },
+  {
+    id: '050',
+    description: 'Informational team building photos',
+    input: {
+      username: 'Zatanna Zatara',
+      email: 'zatanna.zatara@company.com',
+      from: 'social-club@company.com',
+      to: 'all-staff@company.com',
+      subject: 'Photos from Last Night’s Event',
+      body: `Hello Team,
 
 Thank you to everyone who joined us for the magic show last night! We've uploaded all the photos to the shared drive for you to see.
 
@@ -1072,12 +892,8 @@ Hope you had as much fun as we did! No action needed.
 
 Best,
 The Social Club`
-        },
-        expectedOutput: {
-            action: 'NO',
-            labels: ['informational']
-        }
     }
+  }
 ];
 
 module.exports = {
