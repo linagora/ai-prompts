@@ -87,7 +87,7 @@ This prompt explicitly asks the LLM to determine whether an email requires actio
 
 - **Objective:** Separate action detection from label classification.
 
-![Confusion Matrix - Prompt with Action Required](results/promptwithActionRequired.png)
+![Confusion Matrix - Prompt with Action Required](results/yesOrNoNeedsAction.png)
 
 ---
 
@@ -98,19 +98,19 @@ In this configuration, the action_required concept is treated as a label rather 
 #### 2.1 Generic Prompt with Detailed Description in the action_required Label
 - **Description:** The requirement for action is defined within the label’s description.
 
-![Confusion Matrix - Detailed Description in Label](results/promptWithDetaitedDescriptionInLabel.png)
+![Confusion Matrix - Detailed Description in Label](results/v1WithDescription.png)
 
 #### 2.2 Generic Prompt without Detailed Description (V1)
 - **Description:** A minimal version of the prompt with limited guidance regarding the `action_required` label.
-
-![Confusion Matrix - Generic Prompt V1](results/promptV1.png)
+- Our current prompt( baseLine)
+![Confusion Matrix - Generic Prompt V1](results/V1.png)
 
 #### 2.3 Generic Prompt with `action_required` Behavior Described in the Prompt (V2)
 - **Description:** The behavior associated with `action_required` is explained directly in the prompt rather than in the label description.
 
-![Confusion Matrix - Generic Prompt V2](results/promptV2.png)
+![Confusion Matrix - Generic Prompt V2](results/v2.png)
 
 #### 2.4 Generic Prompt with Enhanced Behavior Description (V3)
 - **Description:** An extended version of V2 with more explicit and refined instructions regarding when an action is required.
 
-![Confusion Matrix - Generic Prompt V3](results/PromptV3.png)
+![Confusion Matrix - Generic Prompt V3](results/v3.png)

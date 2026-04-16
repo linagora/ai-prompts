@@ -1,5 +1,5 @@
 const { buildMessages } = require('../../utils/prompts');
-const { EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1} = require('../system_prompts');
+const { EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V3} = require('../system_prompts');
 const { classificationFormatValidForGenericLabels, labelAccuracyScoreForGenericLabels } = require('../../utils/assertions');
 const { emailTestCasesExtended } = require('../../datasets/large-email-dataset');
 const { emailTestCases } = require('../../datasets/small-email-dataset');
@@ -34,7 +34,7 @@ module.exports = {
 
   messages: buildMessages({ 
     task, 
-    system_instruction: EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1
+    system_instruction: EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V3
   }),
 
   tests: selectedTestCases.map(testCase => {

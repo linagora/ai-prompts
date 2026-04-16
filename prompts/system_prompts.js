@@ -77,10 +77,9 @@ const EMAIL_SYSTEM_INSTRUCTIONS_FOR_GENERIC_LABELS_V1= `Analyze the email and se
         Return label IDs as comma-separated values with no spaces.
 
         Examples:
-        - needs-action,label_work
-        - label_personal
-        - needs-action
-        - (empty if no labels match)
+        label_id1,label_id2,...,label_idN
+        label_id1
+        (empty line if no labels match)
 
         Return ONLY the label IDs. No explanations.`;
 
