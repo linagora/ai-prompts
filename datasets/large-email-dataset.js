@@ -212,7 +212,7 @@ The DevOps Team`
       email: 'monica.geller@company.com',
       from: 'finance-noreply@company.com',
       to: 'monica.geller@company.com',
-      subject: 'Action Required: Q2 Departmental Budget Approval',
+      subject: 'Q2 Departmental Budget Approval',
       body: `Hello Monica,
 
 The Q2 budget for the Marketing department is now ready for your final sign-off. Please log into the Finance Portal to review the line items and click 'Approve' by end of day Tuesday.
@@ -253,9 +253,7 @@ Bucky`
       subject: 'AI Weekly: New Breakthroughs in Robotics',
       body: `Hi Tom,
 
-In this week's AI digest, we cover the latest advancements in neural networks and the impact of the new robotics legislation. 
-
-This is just a FYI for your personal development. No response to this newsletter is required.
+In this week's AI digest, we cover the latest advancements in neural networks and the impact of the new robotics legislation.
 
 Best,
 AI Weekly Editors`
@@ -332,8 +330,6 @@ Head of QA`
 
 Please be advised that the HVAC system in the West Wing will undergo routine maintenance this Saturday from 8:00 AM to 1:00 PM. 
 
-This is just a FYI for anyone planning to come into the office over the weekend. No action is required on your part.
-
 Best,
 Facilities Management`
     }
@@ -409,8 +405,6 @@ IT Security Team`
 
 I came across this fascinating paper regarding AI applications in diagnostic imaging. It’s a great read for anyone interested in how our current tech might evolve in the medical sector.
 
-No need to reply, just sharing for your information.
-
 Cheers,
 Fox Mulder`
     }
@@ -423,7 +417,7 @@ Fox Mulder`
       email: 'jack.ryan@company.com',
       from: 'finance-ops@company.com',
       to: 'jack.ryan@company.com',
-      subject: 'Action Required: Missing Receipts for London Trip',
+      subject: 'Missing Receipts for London Trip',
       body: `Hello Jack,
 
 We are processing your travel reimbursement for the London trip, but we noticed that the receipt for the hotel stay is missing.
@@ -485,7 +479,7 @@ Howard Stark`
 
 This is a friendly reminder that the office will be closed next Monday in observance of the public holiday. 
 
-Enjoy the long weekend! No action required.
+Enjoy the long weekend.
 
 Best regards,
 HR Team`
@@ -500,7 +494,7 @@ HR Team`
       email: 'peter.parker@company.com',
       from: 'compliance-office@company.com',
       to: 'peter.parker@company.com',
-      subject: 'Action Required: AI Model Transparency Report',
+      subject: 'AI Model Transparency Report',
       body: `Hello Peter,
 
 As part of our quarterly compliance audit, we need you to provide the documentation for the 'Web-Slinger' AI model’s decision-making logic. 
@@ -597,7 +591,7 @@ Hank McCoy`
       email: 'steve.rogers@company.com',
       from: 'it-procurement@company.com',
       to: 'steve.rogers@company.com',
-      subject: 'Action Required: Software License Renewal',
+      subject: 'Software License Renewal',
       body: `Hi Steve,
 
 The design software licenses for your team are set to expire next week. Please confirm the number of active users so we can proceed with the renewal.
@@ -711,7 +705,7 @@ Systems Monitoring Bot`
       email: 'barry.allen@company.com',
       from: 'it-inventory@company.com',
       to: 'barry.allen@company.com',
-      subject: 'Action Required: Laptop Hardware Refresh Cycle',
+      subject: 'Laptop Hardware Refresh Cycle',
       body: `Hello Barry,
 
 Your current workstation has reached its 3-year limit and is now eligible for a hardware refresh. 
