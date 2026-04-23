@@ -164,6 +164,18 @@ const emailTestCases = [
         Thanks,
         Finance Team`
         }
+    },
+    {
+        "id": "11",
+        "description": "MX Guarddog quarantine report (bulk/phishing suspect)",
+        "input": {
+            "username": "jhon",
+            "email": "jhon@example.com",
+            "from": "DoNotReply@b.example.com",
+            "to": "jhon@example.com",
+            "subject": "Quarantine report for jhon@example.com",
+            "body": "Ce message est un rapport de quarantaine. Un email a été bloqué avant d’atteindre votre boîte de réception. Expéditeur suspect : riviere@delosintelligence.fr. Sujet du message bloqué : \"Vous allez vouloir tester ça...\". Pour consulter ou libérer ce message, utilisez le lien fourni dans le rapport."
+        }
     }
 ];
 
