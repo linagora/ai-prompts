@@ -15,6 +15,16 @@ const {
 } = require('../datasets/required-action-expected-output');
 const { EMAIL_LABELS_FOR_GENERIC_LABELS } = require('../datasets/email-classification-testcases');
 
+const genericLookup = new Map([
+  ...genericExpectedSmall.map(item => [item.id, item.expectedOutput.labels]),
+  ...genericExpectedLarge.map(item => [item.id, item.expectedOutput.labels])
+]);
+
+const requiredLookup = new Map([
+  ...actionExpectedSmall.map(item => [item.id, item.expectedOutput]),
+  ...actionExpectedLarge.map(item => [item.id, item.expectedOutput])
+]);
+
 const dbPath = path.join(require('os').homedir(), '.promptfoo', 'promptfoo.db');
 const buildDir = path.resolve(__dirname, '..', 'build');
 
@@ -68,7 +78,34 @@ function extractPromptMessages(promptValue) {
   return Array.isArray(rawParsed) ? rawParsed : [];
 }
 
+function extractPromptId(promptValue) {
+  const parsed = parseMaybeJson(promptValue);
+  
+  if (parsed && typeof parsed === 'object') {
+    if (typeof parsed.id === 'string') {
+      return parsed.id;
+    }
+    
+    if (parsed.metadata && typeof parsed.metadata.id === 'string') {
+      return parsed.metadata.id;
+    }
+  }
+  
+  return null;
+}
+
 function detectPromptClass(result) {
+  const promptId = extractPromptId(result.prompt);
+  
+  if (promptId) {
+    if (promptId.includes('required')) {
+      return 'required';
+    }
+    if (promptId.includes('generic')) {
+      return 'generic';
+    }
+  }
+
   const messages = extractPromptMessages(result.prompt);
   const systemMessage = messages.find(message => message && message.role === 'system');
   const systemText = systemMessage && typeof systemMessage.content === 'string'
@@ -141,19 +178,27 @@ function parseRequiredPrediction(outputText) {
   return { action, labels };
 }
 
-function resolveExpectedCase(promptClass, description, testIdx) {
-  const genericLookup = new Map([
-    ...genericExpectedSmall.map(item => [item.description, item.expectedOutput.labels]),
-    ...genericExpectedLarge.map(item => [item.description, item.expectedOutput.labels])
-  ]);
+function resolveTestCaseId(testCase, fallbackTestCase) {
+  const idFromTestCase = testCase && (
+    testCase.id ||
+    testCase.caseId ||
+    (testCase.vars && (testCase.vars.id || testCase.vars.caseId))
+  );
 
-  const requiredLookup = new Map([
-    ...actionExpectedSmall.map(item => [item.description, item.expectedOutput]),
-    ...actionExpectedLarge.map(item => [item.description, item.expectedOutput])
-  ]);
+  if (idFromTestCase !== null && idFromTestCase !== undefined) {
+    return String(idFromTestCase);
+  }
 
+  if (fallbackTestCase && fallbackTestCase.id !== null && fallbackTestCase.id !== undefined) {
+    return String(fallbackTestCase.id);
+  }
+
+  return null;
+}
+
+function resolveExpectedCase(promptClass, caseId, testIdx, fallbackTestCase) {
   if (promptClass === 'required') {
-    const expected = requiredLookup.get(description);
+    const expected = caseId ? requiredLookup.get(caseId) : null;
     if (expected) {
       return {
         expectedLabels: expected.labels,
@@ -165,7 +210,7 @@ function resolveExpectedCase(promptClass, description, testIdx) {
       };
     }
   } else {
-    const expectedLabels = genericLookup.get(description);
+    const expectedLabels = caseId ? genericLookup.get(caseId) : null;
     if (expectedLabels) {
       return {
         expectedLabels,
@@ -174,10 +219,6 @@ function resolveExpectedCase(promptClass, description, testIdx) {
       };
     }
   }
-
-  const fallbackTestCase = promptClass === 'required'
-    ? (description && emailTestCasesExtended[testIdx])
-    : (description && emailTestCases[testIdx]);
 
   if (!fallbackTestCase) {
     return null;
@@ -225,14 +266,17 @@ function computeClassSummary(promptClass, rows) {
   rows.forEach(row => {
     const testCase = parseMaybeJson(row.test_case) || {};
     const description = testCase.description || 'Unknown test case';
-    const expected = resolveExpectedCase(promptClass, description, row.test_idx);
+    const fallbackDataset = rows.length <= emailTestCases.length ? emailTestCases : emailTestCasesExtended;
+    const fallbackTestCase = fallbackDataset[row.test_idx];
+    const caseId = resolveTestCaseId(testCase, fallbackTestCase);
+    const expected = resolveExpectedCase(promptClass, caseId, row.test_idx, fallbackTestCase);
 
     if (!expected) {
       details.push({
         description,
         expected: [],
         predicted: [],
-        warning: 'Could not resolve expected labels for this test case'
+        warning: `Could not resolve expected labels for this test case (id=${caseId || 'unknown'})`
       });
       return;
     }
