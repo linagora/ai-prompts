@@ -132,7 +132,7 @@ function labelAccuracyScoreWithActionRequired(expectedLabels = []) {
       const totalExpected = expectedLabels.length;
       
       let accuracy = 0;
-      if (totalExpected === 0 && correctLabels.length === 0) {
+      if (totalExpected === 0 && outputLabels.length === 0) {
         accuracy = 100;
       } else if (totalExpected === 0) {
         accuracy = 0;
@@ -185,7 +185,7 @@ function labelAccuracyScoreForGenericLabels(expectedLabels = []) {
       const totalExpected = expectedLabels.length;
       
       let accuracy = 0;
-      if (totalExpected === 0 && correctLabels.length === 0) {
+      if (totalExpected === 0 && outputLabels.length === 0) {
         accuracy = 100;
       } else if (totalExpected === 0) {
         accuracy = 0;

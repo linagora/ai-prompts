@@ -28,7 +28,7 @@ const expectedLabelsById = new Map(
 );
 
 module.exports = {
-  id: 'classify-email',
+  id: 'classify-email-generic',
   description: 'Classify email for action requirement and assign relevant labels',
   version: '1.0.0',
 
