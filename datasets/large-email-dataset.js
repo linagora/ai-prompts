@@ -1,4 +1,3 @@
-// This dataset contains 100 email for test classification task with 10 labels (urgent, review, decision, meeting, followup, informational, spam, important, AI, no_label_adequate) 
 const emailTestCasesExtended = [
   {
     id: '001',

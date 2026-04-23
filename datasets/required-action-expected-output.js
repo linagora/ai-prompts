@@ -61,7 +61,8 @@ const emailExpectedResultsForSmallDataset = [
     { id: '07', description: 'Email not requiring action - newsletter/informational', expectedOutput: { action: 'NO', labels: [] } },
     { id: '08', description: 'Email requiring action - bug report with follow-up needed', expectedOutput: { action: 'YES', labels: ['important'] } },
     { id: '09', description: 'Email not requiring action - status update only', expectedOutput: { action: 'NO', labels: [] } },
-    { id: '10', description: 'Email requiring action - approval needed', expectedOutput: { action: 'YES', labels: ['important'] } }
+    { id: '10', description: 'Email requiring action - approval needed', expectedOutput: { action: 'YES', labels: ['important'] } },
+    { id: '11', description: 'MX Guarddog quarantine report (bulk/phishing suspect)', expectedOutput: { action: 'NO', labels: [] } }
 ];
 
 module.exports = {
