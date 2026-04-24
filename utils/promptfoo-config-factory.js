@@ -94,10 +94,13 @@ function loadTestsFromDir(promptsDir, logLabel, recursive = false) {
  * @param {boolean} options.recursive - Whether to search subdirectories recursively
  */
 function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
+  const generationModel = process.env.GENERATION_MODEL_ID || 'mistralai/mistral-small-3.2-24b-instruct';
+  const judgeModel = process.env.JUDGE_MODEL_ID || 'openai/gpt-oss-120b';
+
   return {
     providers: [
       {
-        id: 'openai:chat:mistralai/mistral-small-3.2-24b-instruct',
+        id: `openai:chat:${generationModel}`,
         config: {
           apiBaseUrl: process.env.OPENAI_API_HOST,
           apiKey: process.env.OPENAI_API_KEY,
@@ -108,7 +111,7 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
     defaultTest: {
       options: {
         provider: {
-          id: 'openai:chat:openai/gpt-oss-120b',
+          id: `openai:chat:${judgeModel}`,
           config: {
             apiBaseUrl: process.env.OPENAI_API_HOST,
             apiKey: process.env.OPENAI_API_KEY,
