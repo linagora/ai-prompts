@@ -95,7 +95,7 @@ function loadTestsFromDir(promptsDir, logLabel, recursive = false) {
  */
 function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
   const generationModel = process.env.GENERATION_MODEL_ID || 'mistralai/mistral-small-3.2-24b-instruct';
-  const judgeModel = process.env.JUDGE_MODEL_ID || 'openai/gpt-oss-120b';
+  const judgeModel = process.env.JUDGE_MODEL_ID || 'openai/gpt-oss-120b:free';
 
   return {
     providers: [
