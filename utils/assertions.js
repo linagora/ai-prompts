@@ -177,7 +177,10 @@ function labelAccuracyScoreForGenericLabels(expectedLabels = []) {
     value: `
       const outputText = (output || '').trim();
       const parts = outputText.split(',');
-      const outputLabels = parts.map(s => s.trim()).filter(Boolean);
+      const outputLabels = parts
+        .map(s => s.trim())
+        .filter(Boolean)
+        .filter(label => label !== 'NONE');
       const expectedLabels = ${JSON.stringify(expectedLabels)};
       const expectedSet = new Set(expectedLabels);
       
@@ -204,7 +207,7 @@ function labelAccuracyScoreForGenericLabels(expectedLabels = []) {
       };
       
       return {
-        pass: correctLabels.length === totalExpected && metrics.missingLabels.length === 0,
+        pass: correctLabels.length === totalExpected && metrics.missingLabels.length === 0 && metrics.extraLabels.length === 0,
         score: accuracy / 100,
         reason: 'Label Accuracy: ' + accuracy + '% (' + correctLabels.length + '/' + totalExpected + ' correct)' + (metrics.missingLabels.length > 0 ? ' | Missing: ' + metrics.missingLabels.join(',') : '') + (metrics.extraLabels.length > 0 ? ' | Extra: ' + metrics.extraLabels.join(',') : ''),
         namedScores: {
