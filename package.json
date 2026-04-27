@@ -10,7 +10,7 @@
     "eval:email:large": "EMAIL_DATASET=large npm run eval:email",
     "eval:scribe": "promptfoo eval -c promptfooconfig.scribe.js",
     "view": "promptfoo view",
-    "eval-ci": "PROMPTFOO_REQUEST_BACKOFF_MS=5000 promptfoo eval -o results.json -o report.html --verbose && node scripts/eval-summary.js",
+    "eval-ci": "PROMPTFOO_REQUEST_BACKOFF_MS=5000 promptfoo eval -o results.json -o report.html --verbose; node scripts/eval-summary.js",
     "export": "node scripts/export-prompts.js",
     "metrics": "node scripts/confusion-matrix.js"
   },
