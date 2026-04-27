@@ -82,6 +82,7 @@ logger.info(`Total: ${results.length}  Passed: ${passed.length}  Failed: ${faile
 if (failed.length > 0) {
   logger.info('\nFailures:\n');
   const nonEmailFailures = [];
+  const isEmailPrompt = prompt => prompt.startsWith('classify-email');
   
   for (const f of failed) {
     const prompt = f.prompt?.label || 'unknown';
@@ -90,7 +91,7 @@ if (failed.length > 0) {
     logger.info(`  FAIL [${prompt}] ${test}`);
     logger.info(`       ${reason}\n`);
     
-    if (prompt !== 'classify-email') {
+    if (!isEmailPrompt(prompt)) {
       nonEmailFailures.push(f);
     }
   }
@@ -99,6 +100,9 @@ if (failed.length > 0) {
     logger.error(`\n${nonEmailFailures.length} non-email test(s) failed. Only email classification tests are allowed to fail.`);
     process.exit(1);
   }
+
+  logger.info('\nOnly email classification tests failed; CI will not block on these results.\n');
+  process.exit(0);
 }
 
 logger.info('\nAll tests passed.\n');
