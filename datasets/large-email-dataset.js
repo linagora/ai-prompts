@@ -886,6 +886,606 @@ Hope you had as much fun as we did! No action needed.
 Best,
 The Social Club`
     }
+  },
+  {
+    id: "051",
+    description: "Personal reminder about mom's birthday",
+    input: {
+      username: "Peter Parker",
+      email: "peter.parker@company.com",
+      from: "aunt.may@family.net",
+      to: "peter.parker@company.com",
+      tosubject: "Don't forget!",
+      body: "Hey Peter,\n\nJust a quick reminder that your mother's birthday is next Saturday. I'm putting together a small dinner at my place around 7pm.\n\nLet me know if you can make it!\n\nLove,\nAunt May"
+    }
+  },
+  {
+    id: "052",
+    description: "Tax filing deadline reminder",
+    input: {
+      username: "Bruce Banner",
+      email: "bruce.banner@company.com",
+      from: "no-reply@irs-tax-portal.com",
+      to: "bruce.banner@company.com",
+      tosubject: "Final Notice: Tax Filing Due April 15",
+      body: "Dear Bruce Banner,\n\nOur records indicate that you have not yet submitted your Form 1040 for the previous fiscal year. The deadline is April 15.\n\nPlease file or request an extension to avoid penalties and interest charges.\n\nRegards,\nTax Processing Center"
+    }
+  },
+  {
+    id: "053",
+    description: "Request to review a pull request",
+    input: {
+      username: "Tony Stark",
+      email: "tony.stark@company.com",
+      from: "rhodey@company.com",
+      to: "tony.stark@company.com",
+      tosubject: "Code review needed on PR #1472",
+      body: "Hey Tony,\n\nCould you take a look at PR #1472 when you have a moment? It's the refactor of the repulsor control firmware and I'd like your sign-off before merging to main.\n\nThanks,\nRhodey"
+    }
+  },
+  {
+    id: "054",
+    description: "NDA signature request from legal",
+    input: {
+      username: "Natasha Romanoff",
+      email: "natasha.romanoff@company.com",
+      from: "legal@company.com",
+      to: "natasha.romanoff@company.com",
+      tosubject: "Please sign: Non-Disclosure Agreement - Project Widow",
+      body: "Hello Natasha,\n\nAttached is the NDA for your participation in Project Widow. Please review and sign via DocuSign by EOD Thursday so we can proceed with the vendor onboarding.\n\nLet me know if you have any questions.\n\nBest,\nMatt Murdock\nLegal Department"
+    }
+  },
+  {
+    id: "055",
+    description: "Nigerian prince scam email",
+    input: {
+      username: "Wade Wilson",
+      email: "wade.wilson@company.com",
+      from: "prince.adewale@royalmail-ng.biz",
+      to: "wade.wilson@company.com",
+      tosubject: "CONFIDENTIAL BUSINESS PROPOSAL - URGENT REPLY NEEDED",
+      body: "Dear Beloved Friend,\n\nI am Prince Adewale of Nigeria. I have $42,000,000 USD trapped in a foreign account and I require your urgent assistance to transfer these funds. In exchange, you will receive 30% of the total sum.\n\nPlease reply immediately with your full banking details to proceed.\n\nGod bless,\nPrince Adewale"
+    }
+  },
+  {
+    id: "056",
+    description: "Weekly tech industry newsletter",
+    input: {
+      username: "Barry Allen",
+      email: "barry.allen@company.com",
+      from: "newsletter@techcrunch-weekly.com",
+      to: "barry.allen@company.com",
+      tosubject: "TechCrunch Weekly: Top Stories from the Valley",
+      body: "Hi Barry,\n\nThis week's highlights:\n- Series B funding rounds surge 12%\n- New Rust compiler release brings 20% build time improvement\n- Debate grows around EU AI Act enforcement\n\nRead the full digest on our website.\n\nThe TechCrunch Team"
+    }
+  },
+  {
+    id: "057",
+    description: "Project kickoff meeting invitation",
+    input: {
+      username: "Diana Prince",
+      email: "diana.prince@company.com",
+      from: "steve.trevor@company.com",
+      to: "diana.prince@company.com",
+      tosubject: "Kickoff: Themyscira Integration Project",
+      body: "Hi Diana,\n\nYou're invited to the kickoff meeting for the Themyscira Integration Project on Monday, 10am in Conference Room B.\n\nAgenda and pre-read will be shared Friday. See calendar invite for details.\n\nCheers,\nSteve"
+    }
+  },
+  {
+    id: "058",
+    description: "AI-focused newsletter digest",
+    input: {
+      username: "Hal Jordan",
+      email: "hal.jordan@company.com",
+      from: "digest@ai-weekly.io",
+      to: "hal.jordan@company.com",
+      tosubject: "AI Weekly: GPT-5 Rumors, Diffusion Breakthroughs",
+      body: "Hello Hal,\n\nIn this week's edition:\n- Speculation mounts around OpenAI's next flagship model\n- New paper shows 4x speed-up in diffusion sampling\n- Anthropic publishes interpretability research\n\nRead more on aiweekly.io.\n\n- The AI Weekly Team"
+    }
+  },
+  {
+    id: "059",
+    description: "Open enrollment for employee benefits",
+    input: {
+      username: "Arthur Curry",
+      email: "arthur.curry@company.com",
+      from: "benefits@company.com",
+      to: "arthur.curry@company.com",
+      tosubject: "Action Required: Open Enrollment Closes Nov 30",
+      body: "Hi Arthur,\n\nOpen enrollment for next year's benefits closes on November 30. You must log into the benefits portal and confirm or change your health, dental, and 401(k) elections.\n\nIf no action is taken, your current elections will default and you will not be able to change them for 12 months.\n\nHR Benefits Team"
+    }
+  },
+  {
+    id: "060",
+    description: "Automated package delivery notification",
+    input: {
+      username: "Clark Kent",
+      email: "clark.kent@company.com",
+      from: "no-reply@shipping-tracker.com",
+      to: "clark.kent@company.com",
+      tosubject: "Your package has been delivered",
+      body: "Hello Clark,\n\nYour package (tracking #1Z999AA10123456784) was delivered today at 2:47pm to the front door.\n\nThank you for using our service. This is an automated message; please do not reply.\n\nShipping Tracker"
+    }
+  },
+  {
+    id: "061",
+    description: "Wedding invitation requiring RSVP",
+    input: {
+      username: "Selina Kyle",
+      email: "selina.kyle@company.com",
+      from: "harley.quinzel@friends.net",
+      to: "selina.kyle@company.com",
+      tosubject: "You're invited to our wedding!",
+      body: "Hi Selina!\n\nIvy and I are finally tying the knot on June 21 in Gotham Gardens! We'd love for you to be there.\n\nPlease RSVP by May 15 so we can finalize the seating chart. Hope to see you!\n\nLove,\nHarley"
+    }
+  },
+  {
+    id: "062",
+    description: "Urgent credit card fraud alert",
+    input: {
+      username: "Victor Stone",
+      email: "victor.stone@company.com",
+      from: "fraud-alerts@my-bank.com",
+      to: "victor.stone@company.com",
+      tosubject: "URGENT: Suspicious transaction on your card ending 4429",
+      body: "Dear Mr. Stone,\n\nWe detected a suspicious $2,340 charge on your card ending in 4429 at an electronics retailer in Bucharest. If this was not you, please respond immediately to confirm so we can freeze the card and issue a replacement.\n\nIf you do not respond within 24 hours, we may auto-approve the charge.\n\nFraud Prevention Team\nMy Bank"
+    }
+  },
+  {
+    id: "063",
+    description: "Scheduled server maintenance notification",
+    input: {
+      username: "John Stewart",
+      email: "john.stewart@company.com",
+      from: "sysadmin@company.com",
+      to: "all-engineering@company.com",
+      tosubject: "Scheduled maintenance: production DB Sunday 02:00-04:00 UTC",
+      body: "Team,\n\nHeads up: we will be performing maintenance on the primary production database this Sunday from 02:00 to 04:00 UTC. Expect read-only mode during that window.\n\nNo action required from you. Tickets for follow-up work will be created automatically if needed.\n\nInfra Team"
+    }
+  },
+  {
+    id: "064",
+    description: "Contract renewal decision needed",
+    input: {
+      username: "Matt Murdock",
+      email: "matt.murdock@company.com",
+      from: "procurement@company.com",
+      to: "matt.murdock@company.com",
+      tosubject: "Action Needed: AWS Enterprise Agreement renewal",
+      body: "Hi Matt,\n\nOur AWS Enterprise Agreement expires on May 31. Please review the renewal terms (attached) and confirm whether you approve the new 3-year commitment or want to renegotiate.\n\nWe need your decision by May 10 to avoid a lapse in support.\n\nThanks,\nProcurement"
+    }
+  },
+  {
+    id: "065",
+    description: "Crypto investment scam email",
+    input: {
+      username: "Stephen Strange",
+      email: "stephen.strange@company.com",
+      from: "opportunities@cryptomax-returns.biz",
+      to: "stephen.strange@company.com",
+      tosubject: "Turn $500 into $50,000 in 30 Days - GUARANTEED",
+      body: "Dr. Strange,\n\nOur AI-powered trading bot has produced returns of over 9,900% for early investors. Don't miss out! Deposit as little as $500 today and watch your portfolio explode.\n\nClick here to get started: [link]\n\nTo your wealth,\nCryptoMax Returns"
+    }
+  },
+  {
+    id: "066",
+    description: "Monthly personal finance newsletter",
+    input: {
+      username: "Jessica Jones",
+      email: "jessica.jones@company.com",
+      from: "digest@smartmoney-monthly.com",
+      to: "jessica.jones@company.com",
+      tosubject: "Smart Money Monthly: Roth vs. Traditional, Rate Outlook",
+      body: "Hi Jessica,\n\nThis month we break down:\n- Roth vs. Traditional IRAs: which is right for you?\n- Fed rate expectations for Q2\n- Top 5 index funds for long-term savers\n\nEnjoy the read!\n\nSmart Money Monthly"
+    }
+  },
+  {
+    id: "067",
+    description: "Quarterly all-hands meeting invitation",
+    input: {
+      username: "Luke Cage",
+      email: "luke.cage@company.com",
+      from: "exec-office@company.com",
+      to: "all-staff@company.com",
+      tosubject: "Q2 All-Hands: Thursday 3pm",
+      body: "Team,\n\nJoin us for the Q2 all-hands on Thursday at 3pm in the main auditorium (or via Zoom). We'll cover financial results, roadmap, and welcome new hires.\n\nQ&A at the end. No pre-read required.\n\nExec Office"
+    }
+  },
+  {
+    id: "068",
+    description: "Meeting invite about AI vendor evaluation",
+    input: {
+      username: "Sam Wilson",
+      email: "sam.wilson@company.com",
+      from: "procurement@company.com",
+      to: "sam.wilson@company.com",
+      tosubject: "Meeting: AI vendor evaluation - Anthropic vs. OpenAI vs. Cohere",
+      body: "Hi Sam,\n\nWe're scheduling a 1-hour working session next Wednesday at 11am to evaluate AI vendor options for the new summarization feature.\n\nYour technical input will be essential. Please accept the invite.\n\nProcurement"
+    }
+  },
+  {
+    id: "069",
+    description: "Annual performance review scheduled",
+    input: {
+      username: "Carol Danvers",
+      email: "carol.danvers@company.com",
+      from: "nick.fury@company.com",
+      to: "carol.danvers@company.com",
+      tosubject: "Your annual performance review - Tuesday 2pm",
+      body: "Carol,\n\nI've scheduled your annual performance review for Tuesday at 2pm in my office. Please complete your self-assessment form beforehand and bring examples of your top three accomplishments this year.\n\nLooking forward to the discussion.\n\nNick"
+    }
+  },
+  {
+    id: "070",
+    description: "Automated password expiration notice",
+    input: {
+      username: "T'Challa Udaku",
+      email: "tchalla@company.com",
+      from: "no-reply@identity.company.com",
+      to: "tchalla@company.com",
+      tosubject: "Your password will expire in 3 days",
+      body: "Hello T'Challa,\n\nYour company password will expire on April 27. Please change it before then to avoid being locked out of your account.\n\nThis is an automated message; please do not reply.\n\nIT Identity Services"
+    }
+  },
+  {
+    id: "071",
+    description: "Informal dinner invitation from colleague",
+    input: {
+      username: "Scott Lang",
+      email: "scott.lang@company.com",
+      from: "hope.vandyne@company.com",
+      to: "scott.lang@company.com",
+      tosubject: "Dinner this weekend?",
+      body: "Hey Scott,\n\nA few of us from the engineering team are grabbing dinner at that new Thai place on Saturday around 7. Want to come?\n\nNo pressure, just let me know when you can.\n\nHope"
+    }
+  },
+  {
+    id: "072",
+    description: "Expense report rejected, needs resubmission",
+    input: {
+      username: "Jean Grey",
+      email: "jean.grey@company.com",
+      from: "expenses@company.com",
+      to: "jean.grey@company.com",
+      tosubject: "Expense report #ER-8821 rejected - resubmission required",
+      body: "Hi Jean,\n\nYour expense report #ER-8821 was rejected because receipts are missing for two line items (line 4 and line 7).\n\nPlease attach the missing receipts and resubmit within 7 days, otherwise the charges will be reversed to your personal account.\n\nFinance Operations"
+    }
+  },
+  {
+    id: "073",
+    description: "Announcement of new AI model deployment",
+    input: {
+      username: "Ororo Munroe",
+      email: "ororo.munroe@company.com",
+      from: "ml-platform@company.com",
+      to: "all-engineering@company.com",
+      tosubject: "Rolling out new AI recommendation model v3.2",
+      body: "Team,\n\nStarting Monday we will be gradually rolling out AI recommendation model v3.2 to 10% of production traffic. Early benchmarks show a 7% lift in CTR with no latency regression.\n\nNo action required. Monitor dashboards and file a ticket if you see anything unusual.\n\nML Platform Team"
+    }
+  },
+  {
+    id: "074",
+    description: "Mandatory GDPR compliance training",
+    input: {
+      username: "Charles Xavier",
+      email: "charles.xavier@company.com",
+      from: "compliance@company.com",
+      to: "charles.xavier@company.com",
+      tosubject: "Mandatory GDPR Compliance Training - Complete by May 15",
+      body: "Dear Charles,\n\nAs a manager with access to personal data, you are required to complete the GDPR refresher training by May 15. Failure to complete on time may result in revocation of data access privileges.\n\nClick the link in the learning portal to begin.\n\nCompliance Office"
+    }
+  },
+  {
+    id: "075",
+    description: "Weight loss miracle spam",
+    input: {
+      username: "Bruce Wayne",
+      email: "bruce.wayne@company.com",
+      from: "deals@miracle-slim-pills.info",
+      to: "bruce.wayne@company.com",
+      tosubject: "Doctors HATE this one weird trick - lose 30lbs in 2 weeks!",
+      body: "Hi there,\n\nStruggling with belly fat? Our patented herbal formula helps you burn fat while you sleep! Over 1 million bottles sold.\n\nLimited time: 70% OFF today only. Click here to claim your discount!\n\nMiracleSlim Team"
+    }
+  },
+  {
+    id: "076",
+    description: "Marketing industry newsletter",
+    input: {
+      username: "Lois Lane",
+      email: "lois.lane@company.com",
+      from: "news@marketing-brew.com",
+      to: "lois.lane@company.com",
+      tosubject: "Marketing Brew: TikTok ad spend hits new high",
+      body: "Good morning Lois,\n\nToday's top stories:\n- TikTok ad spend reaches record $5B in Q1\n- Influencer marketing ROI dips for first time in 3 years\n- Case study: how Duolingo's owl meme campaign went viral\n\nHave a great day,\nMarketing Brew"
+    }
+  },
+  {
+    id: "077",
+    description: "Weekly 1:1 with manager",
+    input: {
+      username: "Jen Walters",
+      email: "jen.walters@company.com",
+      from: "bruce.banner@company.com",
+      to: "jen.walters@company.com",
+      tosubject: "Our 1:1 this Friday",
+      body: "Hey Jen,\n\nJust confirming our weekly 1:1 on Friday at 11am. If there's anything specific you want to cover, add it to our shared doc.\n\nSee you then,\nBruce"
+    }
+  },
+  {
+    id: "078",
+    description: "Research newsletter summarizing AI papers",
+    input: {
+      username: "Reed Richards",
+      email: "reed.richards@company.com",
+      from: "newsletter@arxiv-digest.org",
+      to: "reed.richards@company.com",
+      tosubject: "arXiv Weekly: top cs.AI papers for April 20",
+      body: "Hi Reed,\n\nThis week's curated picks:\n- \"Scaling Laws for Mixture of Experts\"\n- \"Sparse Attention Revisited\"\n- \"Efficient Fine-Tuning via LoRA+\"\n\nAbstracts and links inside.\n\narXiv Digest"
+    }
+  },
+  {
+    id: "079",
+    description: "Exit interview with departing employee",
+    input: {
+      username: "Susan Storm",
+      email: "susan.storm@company.com",
+      from: "hr@company.com",
+      to: "susan.storm@company.com",
+      tosubject: "Please schedule your exit interview",
+      body: "Dear Susan,\n\nAs you are leaving the company on May 3, we would like to schedule a 30-minute exit interview. Please pick a slot from the attached calendar link by Friday.\n\nYour candid feedback helps us improve.\n\nHR Team"
+    }
+  },
+  {
+    id: "080",
+    description: "Automated calendar sync notification",
+    input: {
+      username: "Ben Grimm",
+      email: "ben.grimm@company.com",
+      from: "no-reply@calendar-sync.com",
+      to: "ben.grimm@company.com",
+      tosubject: "Calendar sync complete - 4 events added",
+      body: "Hello Ben,\n\nYour calendar has been successfully synced. 4 new events were added and 1 was updated.\n\nNo action needed. This is an automated message.\n\nCalendar Sync Service"
+    }
+  },
+  {
+    id: "081",
+    description: "Sympathy / condolences message to team",
+    input: {
+      username: "Logan Howlett",
+      email: "logan.howlett@company.com",
+      from: "ceo@company.com",
+      to: "all-staff@company.com",
+      tosubject: "Remembering our colleague, Kurt Wagner",
+      body: "Team,\n\nIt is with great sadness that I share the passing of our colleague Kurt Wagner after a long illness. Kurt was a beloved member of our engineering team for 12 years.\n\nWe will be holding a memorial service on Friday at 2pm. Counseling services are available through our EAP.\n\nWith deepest condolences,\nThe CEO"
+    }
+  },
+  {
+    id: "082",
+    description: "Overdue invoice reminder from vendor",
+    input: {
+      username: "Wally West",
+      email: "wally.west@company.com",
+      from: "billing@acme-cloud-services.com",
+      to: "wally.west@company.com",
+      tosubject: "Overdue invoice #INV-55321 - please pay immediately",
+      body: "Dear Wally,\n\nInvoice #INV-55321 in the amount of $14,200 is 18 days overdue. Please remit payment by April 30 to avoid a 5% late fee and potential service suspension.\n\nIf payment has already been sent, please reply with the reference number.\n\nBilling, Acme Cloud Services"
+    }
+  },
+  {
+    id: "083",
+    description: "CI/CD pipeline failure alert",
+    input: {
+      username: "Kamala Khan",
+      email: "kamala.khan@company.com",
+      from: "ci-bot@company.com",
+      to: "kamala.khan@company.com",
+      tosubject: "[FAILED] main pipeline - commit 3af89b2",
+      body: "Hi Kamala,\n\nThe main pipeline has failed on your recent commit (3af89b2). Failing stage: integration-tests. 3 tests failing in test_user_api.py.\n\nPlease investigate and push a fix. Main is currently blocked.\n\nCI Bot"
+    }
+  },
+  {
+    id: "084",
+    description: "Trademark infringement legal notice",
+    input: {
+      username: "Wanda Maximoff",
+      email: "wanda.maximoff@company.com",
+      from: "ip-counsel@lawfirm-external.com",
+      to: "wanda.maximoff@company.com",
+      tosubject: "Cease and desist - trademark infringement on \"ScarletCloud\"",
+      body: "Dear Ms. Maximoff,\n\nWe represent ScarletTech Holdings, owners of the registered trademark \"ScarletCloud\". Your company's use of a confusingly similar mark constitutes infringement under 15 U.S.C. § 1114.\n\nPlease respond in writing within 10 business days with your intended course of action.\n\nRegards,\nFoggy Nelson, Esq."
+    }
+  },
+  {
+    id: "085",
+    description: "Fake lottery win scam",
+    input: {
+      username: "Vision",
+      email: "vision@company.com",
+      from: "claims@euromillion-winners.tk",
+      to: "vision@company.com",
+      tosubject: "CONGRATULATIONS! You have won €2,500,000.00",
+      body: "Dear Winner,\n\nYour email address was randomly selected in our International EuroMillion Lottery draw. You have won a cash prize of €2,500,000.00.\n\nTo claim, send us a copy of your ID, proof of address, and a $350 processing fee.\n\nSincerely,\nClaims Dept"
+    }
+  },
+  {
+    id: "086",
+    description: "Health and wellness newsletter",
+    input: {
+      username: "Gamora Zen",
+      email: "gamora.zen@company.com",
+      from: "wellness@company.com",
+      to: "all-staff@company.com",
+      tosubject: "Wellness Weekly: desk stretches and mindful breathing",
+      body: "Hi team,\n\nThis week's wellness tips:\n- Try this 5-minute desk stretch routine\n- Box breathing for stress relief\n- Sign up for the spring hiking group (optional!)\n\nStay healthy!\n\nWellness Committee"
+    }
+  },
+  {
+    id: "087",
+    description: "Prep meeting for a client demo",
+    input: {
+      username: "Rocket Racoon",
+      email: "rocket.racoon@company.com",
+      from: "peter.quill@company.com",
+      to: "rocket.racoon@company.com",
+      tosubject: "Prep meeting: Nova Corp demo Thursday",
+      body: "Rocket,\n\nLet's do a 45-minute prep for the Nova Corp demo on Wednesday at 4pm. Please have the latest slide deck ready and be prepared to walk through the live environment.\n\nThey're making a $2M decision next week, so this one matters.\n\nQuill"
+    }
+  },
+  {
+    id: "088",
+    description: "Urgent AI model retraining deadline",
+    input: {
+      username: "Groot",
+      email: "groot@company.com",
+      from: "cto@company.com",
+      to: "groot@company.com",
+      tosubject: "URGENT: retrain fraud model before Monday release",
+      body: "Groot,\n\nWe just discovered data drift in the fraud detection AI model. We need a full retrain and A/B test before Monday's release or we'll have to roll back.\n\nPlease confirm you can own this and send me an ETA by end of day.\n\nCTO"
+    }
+  },
+  {
+    id: "089",
+    description: "Office relocation announcement",
+    input: {
+      username: "Drax Destroyer",
+      email: "drax.destroyer@company.com",
+      from: "facilities@company.com",
+      to: "all-staff@company.com",
+      tosubject: "Important: office moving to new location in June",
+      body: "Dear Team,\n\nWe are pleased to announce that our office will be relocating to 500 Market Street on June 15. The new space offers more meeting rooms, a larger cafeteria, and secure bike parking.\n\nFull move logistics and FAQ will be shared in a follow-up email next week.\n\nFacilities Team"
+    }
+  },
+  {
+    id: "090",
+    description: "Automated backup success notification",
+    input: {
+      username: "Mantis Empath",
+      email: "mantis@company.com",
+      from: "no-reply@backup-service.company.com",
+      to: "mantis@company.com",
+      tosubject: "Nightly backup completed successfully",
+      body: "Hello Mantis,\n\nYour nightly backup completed successfully at 03:12 UTC. 247GB backed up; 0 errors.\n\nThis is an automated message.\n\nBackup Service"
+    }
+  },
+  {
+    id: "091",
+    description: "Friend asking for pet-sitting favor",
+    input: {
+      username: "Bucky Barnes",
+      email: "bucky.barnes@company.com",
+      from: "steve.rogers@friends.net",
+      to: "bucky.barnes@company.com",
+      tosubject: "Can you watch Dodger next weekend?",
+      body: "Hey Buck,\n\nI'm heading out of town next weekend (Fri-Sun) and my usual dog-sitter bailed. Any chance you could watch Dodger? I'll drop off food and his bed.\n\nLet me know asap so I can find backup if you can't.\n\nSteve"
+    }
+  },
+  {
+    id: "092",
+    description: "Salary increase notification",
+    input: {
+      username: "Nebula",
+      email: "nebula@company.com",
+      from: "hr@company.com",
+      to: "nebula@company.com",
+      tosubject: "Your salary adjustment effective May 1",
+      body: "Dear Nebula,\n\nFollowing your annual review, we are pleased to confirm a salary increase of 8%, effective May 1. Your updated compensation letter is attached for your records.\n\nThank you for your continued contributions.\n\nHR Team"
+    }
+  },
+  {
+    id: "093",
+    description: "Security vulnerability requires immediate patching",
+    input: {
+      username: "Yondu Udonta",
+      email: "yondu.udonta@company.com",
+      from: "security@company.com",
+      to: "yondu.udonta@company.com",
+      tosubject: "CRITICAL: patch CVE-2026-12345 in your services today",
+      body: "Yondu,\n\nA critical RCE vulnerability (CVE-2026-12345, CVSS 9.8) has been disclosed in a library used by your services. You must upgrade to the patched version within 24 hours.\n\nReply with confirmation once patched, or escalate to security@ if you need help.\n\nSecurity Team"
+    }
+  },
+  {
+    id: "094",
+    description: "Legal subpoena for records",
+    input: {
+      username: "Pepper Potts",
+      email: "pepper.potts@company.com",
+      from: "legal@company.com",
+      to: "pepper.potts@company.com",
+      tosubject: "Action required: subpoena for records (Civil Case No. 26-CV-7712)",
+      body: "Dear Pepper,\n\nWe have received a subpoena duces tecum in connection with civil case 26-CV-7712. You are asked to preserve all documents and emails related to \"Project Mandarin\" between 2023 and 2025.\n\nPlease acknowledge receipt and do NOT delete any related records. I will schedule a meeting to walk through the preservation protocol.\n\nGeneral Counsel"
+    }
+  },
+  {
+    id: "095",
+    description: "Phishing email impersonating IT",
+    input: {
+      username: "Happy Hogan",
+      email: "happy.hogan@company.com",
+      from: "it-support@compnay-secure.com",
+      to: "happy.hogan@company.com",
+      tosubject: "Your email account will be deactivated",
+      body: "Dear User,\n\nYour mailbox has exceeded its storage limit. To prevent deactivation within the next 24 hours, please verify your account by clicking the link below and entering your credentials.\n\n[Verify Account]\n\nIT Support"
+    }
+  },
+  {
+    id: "096",
+    description: "Cybersecurity industry newsletter",
+    input: {
+      username: "Agatha Harkness",
+      email: "agatha.harkness@company.com",
+      from: "newsletter@krebs-on-security.com",
+      to: "agatha.harkness@company.com",
+      tosubject: "This week: ransomware trends and zero-day roundup",
+      body: "Hi Agatha,\n\nIn this issue:\n- LockBit affiliates shift to new extortion model\n- Chrome zero-day patched; update now\n- Phishing campaign targeting SSO portals\n\nRead the full stories at krebsonsecurity.com.\n\n- The KOS Team"
+    }
+  },
+  {
+    id: "097",
+    description: "AI ethics committee meeting",
+    input: {
+      username: "Monica Rambeau",
+      email: "monica.rambeau@company.com",
+      from: "ai-ethics-chair@company.com",
+      to: "monica.rambeau@company.com",
+      tosubject: "Meeting: AI Ethics Committee - review of new model release",
+      body: "Hi Monica,\n\nThe AI Ethics Committee is meeting next Thursday at 1pm to review the responsible-release checklist for our upcoming generative AI feature. We'd value your perspective as a committee member.\n\nCalendar invite attached.\n\nAI Ethics Chair"
+    }
+  },
+  {
+    id: "098",
+    description: "AI research conference invitation",
+    input: {
+      username: "Moon Knight",
+      email: "marc.spector@company.com",
+      from: "events@neurips.cc",
+      to: "marc.spector@company.com",
+      tosubject: "NeurIPS 2026 - Registration open",
+      body: "Dear Dr. Spector,\n\nRegistration for NeurIPS 2026 in Vancouver (Dec 7-12) is now open. As a past contributor, you qualify for early-bird pricing through May 31.\n\nWe hope to see you and your team there.\n\nNeurIPS Organizing Committee"
+    }
+  },
+  {
+    id: "099",
+    description: "Monthly book club gathering",
+    input: {
+      username: "Dinah Lance",
+      email: "dinah.lance@company.com",
+      from: "book-club@company.com",
+      to: "dinah.lance@company.com",
+      tosubject: "This month's pick: Project Hail Mary",
+      body: "Hi Dinah,\n\nThis month we're reading Project Hail Mary by Andy Weir! Our next gathering is May 10 at 6:30pm in the 4th floor lounge.\n\nSnacks and drinks provided. Drop in if you can.\n\n- The Book Club"
+    }
+  },
+  {
+    id: "100",
+    description: "Automated welcome email for new SaaS signup",
+    input: {
+      username: "Kate Bishop",
+      email: "kate.bishop@company.com",
+      from: "welcome@no-reply.taskflow.io",
+      to: "kate.bishop@company.com",
+      tosubject: "Welcome to TaskFlow!",
+      body: "Hi Kate,\n\nThanks for signing up for TaskFlow! Your free trial is active for the next 14 days.\n\nCheck out our getting-started guide to create your first project. This is an automated message; please do not reply.\n\n- The TaskFlow Team"
+    }
   }
 ];
 
