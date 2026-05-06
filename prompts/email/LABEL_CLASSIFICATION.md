@@ -9,35 +9,35 @@ We use two datasets for evaluating email classification prompts:
 ### Goal
 The main objective is to **test different prompt designs** and **compare their performance** using evaluation metrics such as the **confusion matrix**.
 
-Although the current direction is to move away from using the **`action_required`** (or **needs action**) field as a separate output, it remains valuable to keep it for **benchmarking and comparison** with existing prompts.
+Although the current direction is to move away from using the **`needs-action`** (or **needs action**) field as a separate output, it remains valuable to keep it for **benchmarking and comparison** with existing prompts.
 
 ---
 
 ## Existing Prompts
 
-### 1. Prompt with `action_required`
+### 1. Prompt with `needs-action`
 - This prompt first determines whether the email requires an action.
-- The LLM responds with **"YES"** or **"NO"** in the `action_required` field.
+- The LLM responds with **"YES"** or **"NO"** in the `needs-action` field.
 - It then assigns the appropriate **labels** to the email.
 
 ### 2. Prompt with Generic Labels Only
-- This prompt returns **only labels**, without a dedicated `action_required` field.
-- In this setup, **`action_required` is treated as a label**.
+- This prompt returns **only labels**, without a dedicated `needs-action` field.
+- In this setup, **`needs-action` is treated as a label**.
 
 ---
 
-## Approaches for Handling `action_required`
+## Approaches for Handling `needs-action`
 
-### Approach 1: Treating `action_required` as a Standard Label
+### Approach 1: Treating `needs-action` as a Standard Label
 All labels are handled uniformly, and the requirement for action is defined within the label’s description.
 
 ```javascript
 { 
-  id: 'action_required', 
+  id: 'needs-action', 
   description: 'Apply ONLY if the email contains a clear and direct request requiring a specific action from the recipient (e.g., reply, provide information, approve, complete a task, or explicitly respond). The request must be addressed to the recipient and create a clear obligation to act. Do NOT apply to newsletters, marketing emails, automated messages (no-reply, notifications, alerts), meeting invitations without a required response, or purely informational content. Do NOT apply if the action is optional, implicit, or unclear. Most emails do NOT require action.'
 } 
 ```
-### Approach 2: Explicit `action_required` Field in the Prompt
+### Approach 2: Explicit `needs-action` Field in the Prompt
 
 In this approach, the requirement for action is explicitly specified in the prompt rather than being treated as a label.
 
@@ -80,9 +80,9 @@ EMAIL_DATASET=large npm run eval:email
 ```
 ## Results
 
-The evaluation results compare the performance of different email classification prompt strategies using confusion matrices. Each matrix illustrates how accurately the model predicts the action_required`behavior and associated labels.
+The evaluation results compare the performance of different email classification prompt strategies using confusion matrices. Each matrix illustrates how accurately the model predicts the needs-action`behavior and associated labels.
 
-### 1. Prompt with Explicit `action_required` Field
+### 1. Prompt with Explicit `needs-action` Field
 This prompt explicitly asks the LLM to determine whether an email requires action by returning YES or NO, followed by the relevant labels.
 
 - **Objective:** Separate action detection from label classification.
@@ -93,20 +93,20 @@ This prompt explicitly asks the LLM to determine whether an email requires actio
 
 ### 2. Generic Labels Only
 
-In this configuration, the action_required concept is treated as a label rather than a separate field. Several prompt variations were evaluated to measure the impact of instruction clarity.
+In this configuration, the needs-action concept is treated as a label rather than a separate field. Several prompt variations were evaluated to measure the impact of instruction clarity.
 
-#### 2.1 Generic Prompt with Detailed Description in the action_required Label
+#### 2.1 Generic Prompt with Detailed Description in the needs-action Label
 - **Description:** The requirement for action is defined within the label’s description.
 
 ![Confusion Matrix - Detailed Description in Label](results/v1WithDescription.png)
 
 #### 2.2 Generic Prompt without Detailed Description (V1)
-- **Description:** A minimal version of the prompt with limited guidance regarding the `action_required` label.
+- **Description:** A minimal version of the prompt with limited guidance regarding the `needs-action` label.
 - Our current prompt( baseLine)
 ![Confusion Matrix - Generic Prompt V1](results/V1.png)
 
-#### 2.3 Generic Prompt with `action_required` Behavior Described in the Prompt (V2)
-- **Description:** The behavior associated with `action_required` is explained directly in the prompt rather than in the label description.
+#### 2.3 Generic Prompt with `needs-action` Behavior Described in the Prompt (V2)
+- **Description:** The behavior associated with `needs-action` is explained directly in the prompt rather than in the label description.
 
 ![Confusion Matrix - Generic Prompt V2](results/v2.png)
 

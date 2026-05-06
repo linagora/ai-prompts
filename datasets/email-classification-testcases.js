@@ -1,4 +1,4 @@
-const EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL = [
+const EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL = [
   { id: 'important', description: 'This includes an important matter and should be treated with care' },
   { id: 'meeting', description: 'This includes a meeting invitation' },
   { id: 'AI', description: 'The topic is about Artificial Intelligence (AI)' },
@@ -6,14 +6,14 @@ const EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL = [
 ];
 
 const EMAIL_LABELS_FOR_GENERIC_LABELS = [
-  ...EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL,
-  { id: 'action_required', description: 'Explicit action required' }
+  ...EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL,
+  { id: 'needs-action', description: 'Explicit action required' }
 ];
 
 const EMAIL_LABELS_WITH_DETAILED_ACTION_DESCRIPTIONS = [
-  ...EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL,
+  ...EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL,
   { 
-    id: 'action_required', 
+    id: 'needs-action', 
     description: 'Apply ONLY if the email contains a clear and direct request requiring a specific action from the recipient (e.g. reply, provide information, approve, complete a task, or explicitly respond). The request must be addressed to the recipient and create a clear obligation to act. Do NOT apply to newsletters, marketing emails, automated messages (no-reply, notifications, alerts), meeting invitations without required response, or informational content. Do NOT apply if the action is optional, implicit, or unclear. Most emails do NOT require action.' 
   }
 ];
@@ -41,5 +41,5 @@ module.exports = {
   formatEmailForClassification,
   EMAIL_LABELS_FOR_GENERIC_LABELS,
   EMAIL_LABELS_WITH_DETAILED_ACTION_DESCRIPTIONS,
-  EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL
+  EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL
 };
