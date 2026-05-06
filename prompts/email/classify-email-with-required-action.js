@@ -1,7 +1,7 @@
 const { buildMessages } = require('../../utils/prompts');
 const { EMAIL_SYSTEM_INSTRUCTIONS_WITH_ACTION_FIELD } = require('../system_prompts');
 const { classificationFormatValidWithActionRequired, actionRequirementCorrectWithActionRequired, labelAccuracyScoreWithActionRequired} = require('../../utils/assertions');
-const { formatEmailForClassification, EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL } = require('../../datasets/email-classification-testcases');
+const { formatEmailForClassification, EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL } = require('../../datasets/email-classification-testcases');
 const { emailTestCasesExtended} = require('../../datasets/large-email-dataset');
 const { emailTestCases } = require('../../datasets/small-email-dataset');
 const {
@@ -51,7 +51,7 @@ module.exports = {
     return({
     description: testCase.description,
     vars: {
-      input: formatEmailForClassification(testCase.input, EMAIL_LABELS_WITHOUT_ACTION_REQUIRED_LABEL)
+      input: formatEmailForClassification(testCase.input, EMAIL_LABELS_WITHOUT_NEEDS_ACTION_LABEL)
     },
     assert: [
       classificationFormatValidWithActionRequired(),
