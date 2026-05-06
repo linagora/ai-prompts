@@ -205,7 +205,7 @@ function resolveExpectedCase(promptClass, caseId, testIdx, fallbackTestCase) {
         expectedAction: expected.action,
         combinedExpectedLabels: normalizeLabels([
           ...(expected.labels || []),
-          expected.action === 'YES' ? 'action_required' : null
+          expected.action === 'YES' ? 'needs-action' : null
         ])
       };
     }
@@ -231,7 +231,7 @@ function resolveExpectedCase(promptClass, caseId, testIdx, fallbackTestCase) {
       expectedAction: fallbackExpected.action || 'NO',
       combinedExpectedLabels: normalizeLabels([
         ...(fallbackExpected.labels || []),
-        fallbackExpected.action === 'YES' ? 'action_required' : null
+        fallbackExpected.action === 'YES' ? 'needs-action' : null
       ])
     };
   }
@@ -288,7 +288,7 @@ function computeClassSummary(promptClass, rows) {
 
     const combinedPredictedLabels = normalizeLabels([
       ...(predictedLabels.labels || []),
-      promptClass === 'required' && predictedLabels.action === 'YES' ? 'action_required' : null
+      promptClass === 'required' && predictedLabels.action === 'YES' ? 'needs-action' : null
     ]);
 
     const expectedSet = new Set(expected.combinedExpectedLabels);
