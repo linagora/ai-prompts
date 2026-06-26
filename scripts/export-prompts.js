@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Logger = require('../utils/logger');
+const { PROMPT_INJECTION_GUARD } = require('../prompts/system_prompts');
 const logger = new Logger('export-prompts');
 
 const promptsDir = path.join(__dirname, '../prompts');
@@ -67,6 +68,9 @@ for (const [categoryName, prompts] of Object.entries(categories)) {
   
   const output = {
     generatedAt: new Date().toISOString(),
+    shared: {
+      promptInjectionGuard: PROMPT_INJECTION_GUARD
+    },
     prompts: prompts
   };
   
