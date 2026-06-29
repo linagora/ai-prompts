@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Logger = require('../utils/logger');
+const { PROMPT_INJECTION_GUARD } = require('../prompts/system_prompts');
 const logger = new Logger('export-prompts');
 
 const promptsDir = path.join(__dirname, '../prompts');
@@ -14,27 +15,27 @@ if (!fs.existsSync(buildDir)) {
 function findAndCategorizePrompts(dir) {
   const categories = {};
   const items = fs.readdirSync(dir);
-  
+
   for (const item of items) {
     const fullPath = path.join(dir, item);
     const stat = fs.statSync(fullPath);
-    
+
     if (stat.isDirectory()) {
       const categoryPrompts = [];
       const categoryItems = fs.readdirSync(fullPath);
-      
+
       for (const categoryItem of categoryItems) {
         const categoryItemPath = path.join(fullPath, categoryItem);
         const categoryStat = fs.statSync(categoryItemPath);
-        
+
         if (categoryStat.isFile() && categoryItem.endsWith('.js')) {
           try {
             const promptModule = require(categoryItemPath);
-            
+
             if (!promptModule.id || !promptModule.messages) {
               continue;
             }
-            
+
             categoryPrompts.push({
               name: promptModule.id,
               version: promptModule.version,
@@ -46,35 +47,44 @@ function findAndCategorizePrompts(dir) {
           }
         }
       }
-      
+
       if (categoryPrompts.length > 0) {
         categories[item] = categoryPrompts;
       }
     }
   }
-  
+
   return categories;
 }
+
+// Extra fragments emitted per category. The prompt-injection guard is only
+// relevant to scribe, so it is attached to that category alone.
+const EXTRA_BY_CATEGORY = {
+  scribe: {
+    promptInjectionGuard: PROMPT_INJECTION_GUARD
+  }
+};
 
 const categories = findAndCategorizePrompts(promptsDir);
 
 for (const [categoryName, prompts] of Object.entries(categories)) {
   const categoryBuildDir = path.join(buildDir, categoryName);
-  
+
   if (!fs.existsSync(categoryBuildDir)) {
     fs.mkdirSync(categoryBuildDir, { recursive: true });
   }
-  
+
   const output = {
     generatedAt: new Date().toISOString(),
+    extra: EXTRA_BY_CATEGORY[categoryName] || {},
     prompts: prompts
   };
-  
+
   fs.writeFileSync(
     path.join(categoryBuildDir, 'prompts.json'),
     JSON.stringify(output, null, 2)
   );
-  
+
   logger.info(`Generated: ${categoryName}/prompts.json`);
 }
 
