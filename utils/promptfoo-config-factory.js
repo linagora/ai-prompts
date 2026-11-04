@@ -148,7 +148,7 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
       }
     },
     evaluateOptions: {
-      maxConcurrency: 2
+      maxConcurrency: Number(process.env.EVAL_CONCURRENCY) || 2
     },
     prompts: loadPromptsFromDir(promptsDir, logLabel, recursive),
     tests: loadTestsFromDir(promptsDir, logLabel, recursive)
