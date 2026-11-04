@@ -126,7 +126,11 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
         config: {
           apiBaseUrl,
           apiKey: process.env.OPENAI_API_KEY,
-          maxRetries: 3
+          maxRetries: 3,
+          // Reasoning models (e.g. qwen3.8) return their chain-of-thought in
+          // reasoning_content; without this promptfoo prepends it as "Thinking: …"
+          // to the output and the edited-text assertions all fail.
+          showThinking: false
         }
       }
     ],
@@ -137,7 +141,8 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
           config: {
             apiBaseUrl,
             apiKey: process.env.OPENAI_API_KEY,
-            maxRetries: 3
+            maxRetries: 3,
+            showThinking: false
           }
         },
       }
