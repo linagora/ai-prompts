@@ -87,6 +87,19 @@ function loadTestsFromDir(promptsDir, logLabel, recursive = false) {
 }
 
 /**
+ * Strip scheme, trailing slashes and a trailing /v1 so we are left with a bare host.
+ */
+function normalizeApiHost(rawHost) {
+  if (!rawHost) return rawHost;
+  return rawHost
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/\/+$/, '')
+    .replace(/\/v1$/i, '')
+    .replace(/\/+$/, '');
+}
+
+/**
  * Create a promptfoo config with common settings
  * @param {Object} options
  * @param {string} options.promptsDir - Absolute path to prompts directory
@@ -97,12 +110,21 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
   const generationModel = process.env.GENERATION_MODEL_ID || 'mistralai/mistral-small-3.2-24b-instruct';
   const judgeModel = process.env.JUDGE_MODEL_ID || 'openai/gpt-oss-120b';
 
+  // promptfoo's OpenAI provider reads OPENAI_API_HOST from the env and rebuilds it as
+  // `https://<value>/v1`; a value with a scheme yields https://https://… and an
+  // unresolvable host, so rewrite the env var to a bare host it can use as-is.
+  const apiHost = normalizeApiHost(process.env.OPENAI_API_HOST);
+  if (apiHost) {
+    process.env.OPENAI_API_HOST = apiHost;
+  }
+  const apiBaseUrl = apiHost ? `https://${apiHost}/v1` : undefined;
+
   return {
     providers: [
       {
         id: `openai:chat:${generationModel}`,
         config: {
-          apiBaseUrl: process.env.OPENAI_API_HOST,
+          apiBaseUrl,
           apiKey: process.env.OPENAI_API_KEY,
           maxRetries: 3
         }
@@ -113,7 +135,7 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
         provider: {
           id: `openai:chat:${judgeModel}`,
           config: {
-            apiBaseUrl: process.env.OPENAI_API_HOST,
+            apiBaseUrl,
             apiKey: process.env.OPENAI_API_KEY,
             maxRetries: 3
           }
