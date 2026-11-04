@@ -119,6 +119,13 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
   }
   const apiBaseUrl = apiHost ? `https://${apiHost}/v1` : undefined;
 
+  // OpenRouter turns a reasoning model's thinking off when the request carries
+  // reasoning.enabled=false; promptfoo only forwards config.reasoning for o-series
+  // models, so route it through passthrough. Opt-in — some backends reject it.
+  const reasoningOff = /^(1|true|yes)$/i.test(process.env.DISABLE_REASONING || '')
+    ? { passthrough: { reasoning: { enabled: false } } }
+    : {};
+
   return {
     providers: [
       {
@@ -130,7 +137,8 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
           // Reasoning models (e.g. qwen3.8) return their chain-of-thought in
           // reasoning_content; without this promptfoo prepends it as "Thinking: …"
           // to the output and the edited-text assertions all fail.
-          showThinking: false
+          showThinking: false,
+          ...reasoningOff
         }
       }
     ],
