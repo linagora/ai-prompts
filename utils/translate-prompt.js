@@ -4,7 +4,8 @@ const { noExtraInfo, translationAccurate } = require('./assertions');
 
 const SAMPLE_INPUTS = {
   French: "Bonjour, comment allez-vous? J'espère que vous passez une excellente journée.",
-  English: "Hello, how are you? I hope you're having a great day."
+  English: "Hello, how are you? I hope you're having a great day.",
+  Mongolian: "Сайн байна уу? Сайхан өдрийг өнгөрүүлж байгаа гэдэгт найдаж байна."
 };
 
 /**
@@ -14,7 +15,7 @@ const SAMPLE_INPUTS = {
 function makeTranslatePrompt(language) {
   const task = `Translate the text to ${language}.`;
   // The test text must not already be in the target language
-  const inputLanguage = Object.keys(SAMPLE_INPUTS).find(
+  const inputLanguages = Object.keys(SAMPLE_INPUTS).filter(
     (sampleLanguage) => sampleLanguage.toLowerCase() !== language.toLowerCase()
   );
 
@@ -25,18 +26,16 @@ function makeTranslatePrompt(language) {
 
     messages: buildMessages({ task, system_instruction: SCRIBE_SYSTEM_INSTRUCTIONS }),
 
-    tests: [
-      {
-        description: `Translate to ${language} - ${inputLanguage} input`,
-        vars: {
-          input: SAMPLE_INPUTS[inputLanguage]
-        },
-        assert: [
-          noExtraInfo({ task }),
-          translationAccurate(language)
-        ]
-      }
-    ]
+    tests: inputLanguages.map((inputLanguage) => ({
+      description: `Translate to ${language} - ${inputLanguage} input`,
+      vars: {
+        input: SAMPLE_INPUTS[inputLanguage]
+      },
+      assert: [
+        noExtraInfo({ task }),
+        translationAccurate(language)
+      ]
+    }))
   };
 }
 
