@@ -3,6 +3,11 @@ name: Prompts Evaluation
 on:
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: 'Email dataset to evaluate (small|large)'
+        default: large
 
 jobs:
   eval:
@@ -20,6 +25,10 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GENERATION_MODEL_ID: ${{ secrets.GENERATION_MODEL_ID }}
           JUDGE_MODEL_ID: ${{ secrets.JUDGE_MODEL_ID }}
+          EVAL_CONCURRENCY: 8
+          # PRs run the small dataset as a fast gate; manual runs evaluate the
+          # full large dataset.
+          EMAIL_DATASET: ${{ github.event_name == 'pull_request' && 'small' || github.event.inputs.dataset || 'large' }}
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v6
