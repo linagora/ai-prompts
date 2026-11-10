@@ -103,7 +103,7 @@ const emailExpectedResultsForLargeDataset = [
 
 const emailExpectedResultsForSmallDataset = [
   { id: '01', description: 'Anthropic Claude.ai magic link', expectedOutput: { action: 'NO', labels: [] } },
-  { id: '02', description: 'Atlassian Cloud migration maturity test', expectedOutput: { action: 'NO', labels: [] } },
+  { id: '02', description: 'Atlassian Cloud migration maturity test', expectedOutput: { action: 'NO', labels: ['newsletter'] } },
   { id: '03', description: 'Open Source Experience launch webinar invitation', expectedOutput: { action: 'NO', labels: [] } },
   { id: '04', description: 'New Android build for Visio Mobile', expectedOutput: { action: 'NO', labels: [] } },
   { id: '05', description: 'n8n security updates opt-in request', expectedOutput: { action: 'NO', labels: [] } },
