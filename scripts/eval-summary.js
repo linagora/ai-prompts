@@ -4,6 +4,7 @@ const Logger = require('../utils/logger');
 const logger = new Logger('eval-summary');
 
 const resultsPath = path.resolve(__dirname, '..', 'results.json');
+const REASON_MAX_LENGTH = 300;
 
 if (!fs.existsSync(resultsPath)) {
   logger.error('results.json not found. Run eval first.');
@@ -12,97 +13,119 @@ if (!fs.existsSync(resultsPath)) {
 
 const data = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
 const results = data.results?.results || [];
-const prompts = data.results?.prompts || [];
 
-const rows = prompts
-  .filter(p => p.metrics?.tokenUsage?.total > 0)
-  .map(p => {
-    const u = p.metrics.tokenUsage;
-    const a = u.assertions || {};
-    return {
-      prompt: p.label || p.id.slice(0, 20),
-      evalPrompt: u.prompt,
-      evalCompletion: u.completion,
-      evalTotal: u.total,
-      gradingPrompt: a.prompt || 0,
-      gradingCompletion: a.completion || 0,
-      gradingTotal: a.total || 0,
-    };
-  });
+const isEmailPrompt = prompt => prompt.startsWith('classify-email');
+const promptLabel = r => r.prompt?.label || 'unknown';
+const isError = r => r.failureReason === 2;
 
-if (rows.length === 0) {
-  logger.info('No token usage data found.');
-  process.exit(0);
+function failureReason(r) {
+  const output = r.response?.output;
+  let reason = r.gradingResult?.reason || r.error || 'no reason';
+  if ((output === undefined || output === null || output === '') && r.response?.finishReason) {
+    reason += ` (finish reason: ${r.response.finishReason})`;
+  }
+  reason = reason.replace(/\s+/g, ' ').trim();
+  return reason.length > REASON_MAX_LENGTH ? `${reason.slice(0, REASON_MAX_LENGTH)}…` : reason;
 }
 
-const totals = rows.reduce((acc, r) => {
-  acc.evalPrompt += r.evalPrompt;
-  acc.evalCompletion += r.evalCompletion;
-  acc.evalTotal += r.evalTotal;
-  acc.gradingPrompt += r.gradingPrompt;
-  acc.gradingCompletion += r.gradingCompletion;
-  acc.gradingTotal += r.gradingTotal;
-  return acc;
-}, { evalPrompt: 0, evalCompletion: 0, evalTotal: 0, gradingPrompt: 0, gradingCompletion: 0, gradingTotal: 0 });
-
-const pad = (s, n) => String(s).padStart(n);
-const col = { name: 28, num: 10 };
-
-logger.info('\n--- Token Usage Summary ---\n');
-logger.info(
-  'Prompt'.padEnd(col.name) +
-  pad('Eval In', col.num) + pad('Eval Out', col.num) + pad('Eval Tot', col.num) +
-  pad('Grade In', col.num) + pad('Grade Out', col.num) + pad('Grade Tot', col.num)
-);
-logger.info('-'.repeat(col.name + col.num * 6));
-
-for (const r of rows) {
-  logger.info(
-    r.prompt.padEnd(col.name) +
-    pad(r.evalPrompt, col.num) + pad(r.evalCompletion, col.num) + pad(r.evalTotal, col.num) +
-    pad(r.gradingPrompt, col.num) + pad(r.gradingCompletion, col.num) + pad(r.gradingTotal, col.num)
-  );
+const byPrompt = new Map();
+for (const r of results) {
+  const label = promptLabel(r);
+  if (!byPrompt.has(label)) {
+    byPrompt.set(label, { label, pass: 0, fail: 0, error: 0, evalTokens: 0, gradeTokens: 0, failures: [] });
+  }
+  const row = byPrompt.get(label);
+  row.evalTokens += r.response?.tokenUsage?.total || 0;
+  row.gradeTokens += r.gradingResult?.tokensUsed?.total || 0;
+  if (r.success) {
+    row.pass++;
+    continue;
+  }
+  isError(r) ? row.error++ : row.fail++;
+  row.failures.push({ test: r.testCase?.description || 'unknown', reason: failureReason(r), error: isError(r) });
 }
 
-logger.info('-'.repeat(col.name + col.num * 6));
-logger.info(
-  'TOTAL'.padEnd(col.name) +
-  pad(totals.evalPrompt, col.num) + pad(totals.evalCompletion, col.num) + pad(totals.evalTotal, col.num) +
-  pad(totals.gradingPrompt, col.num) + pad(totals.gradingCompletion, col.num) + pad(totals.gradingTotal, col.num)
+const rows = [...byPrompt.values()].sort((a, b) => a.label.localeCompare(b.label));
+const total = rows.reduce(
+  (acc, r) => ({
+    pass: acc.pass + r.pass,
+    fail: acc.fail + r.fail,
+    error: acc.error + r.error,
+    evalTokens: acc.evalTokens + r.evalTokens,
+    gradeTokens: acc.gradeTokens + r.gradeTokens,
+  }),
+  { pass: 0, fail: 0, error: 0, evalTokens: 0, gradeTokens: 0 }
 );
-logger.info('');
+const failedRows = rows.filter(r => r.failures.length > 0);
+const blockingFailures = failedRows.filter(r => !isEmailPrompt(r.label)).reduce((n, r) => n + r.failures.length, 0);
 
-// --- Pass/Fail Summary ---
-const passed = results.filter(r => r.success);
-const failed = results.filter(r => !r.success);
+let verdict;
+if (failedRows.length === 0) {
+  verdict = 'All tests passed.';
+} else if (blockingFailures > 0) {
+  verdict = `${blockingFailures} non-email test(s) failed. Only email classification tests are allowed to fail.`;
+} else {
+  verdict = 'Only email classification tests failed; CI will not block on these results.';
+}
 
-logger.info('--- Test Summary ---\n');
-logger.info(`Total: ${results.length}  Passed: ${passed.length}  Failed: ${failed.length}`);
+function printConsole() {
+  const nameWidth = Math.max(6, ...rows.map(r => r.label.length)) + 2;
+  const num = (v, w = 7) => String(v).padStart(w);
+  const line = (label, r) =>
+    label.padEnd(nameWidth) + num(r.pass) + num(r.fail) + num(r.error) + num(r.evalTokens, 12) + num(r.gradeTokens, 12);
+  const rule = '-'.repeat(nameWidth + 7 * 3 + 12 * 2);
 
-if (failed.length > 0) {
-  logger.info('\nFailures:\n');
-  const nonEmailFailures = [];
-  const isEmailPrompt = prompt => prompt.startsWith('classify-email');
-  
-  for (const f of failed) {
-    const prompt = f.prompt?.label || 'unknown';
-    const test = f.testCase?.description || 'unknown';
-    const reason = f.gradingResult?.reason || f.error || 'no reason';
-    logger.info(`  FAIL [${prompt}] ${test}`);
-    logger.info(`       ${reason}\n`);
-    
-    if (!isEmailPrompt(prompt)) {
-      nonEmailFailures.push(f);
+  const out = [];
+  out.push('', '=== Results by prompt ===', '');
+  out.push('Prompt'.padEnd(nameWidth) + num('Pass') + num('Fail') + num('Error') + num('Eval tok', 12) + num('Grade tok', 12));
+  out.push(rule);
+  for (const r of rows) out.push(line(r.label, r));
+  out.push(rule);
+  out.push(line('TOTAL', total));
+
+  if (failedRows.length > 0) {
+    out.push('', `=== Failures (${total.fail + total.error}) ===`);
+    for (const r of failedRows) {
+      const tag = isEmailPrompt(r.label) ? ' [non-blocking]' : '';
+      out.push('', `${r.label} (${r.failures.length})${tag}`);
+      for (const f of r.failures) {
+        out.push(`  ✗ ${f.error ? '[error] ' : ''}${f.test}`);
+        out.push(`      ${f.reason}`);
+      }
     }
   }
-  
-  if (nonEmailFailures.length > 0) {
-    logger.error(`\n${nonEmailFailures.length} non-email test(s) failed. Only email classification tests are allowed to fail.`);
-    process.exit(1);
-  }
 
-  logger.info('\nOnly email classification tests failed; CI will not block on these results.\n');
-  process.exit(0);
+  out.push('', `${total.pass}/${results.length} passed. ${verdict}`, '');
+  console.log(out.join('\n'));
 }
 
-logger.info('\nAll tests passed.\n');
+function writeStepSummary() {
+  const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+  if (!summaryPath) return;
+
+  const cell = s => String(s).replace(/\|/g, '\\|');
+  const status = r => (r.failures.length === 0 ? '✅' : isEmailPrompt(r.label) ? '⚠️' : '❌');
+
+  const md = [];
+  md.push('## Prompt evaluation', '');
+  md.push(`**${total.pass}/${results.length} passed** · ${verdict}`, '');
+  md.push('| | Prompt | Pass | Fail | Error | Eval tokens | Grading tokens |');
+  md.push('|---|---|--:|--:|--:|--:|--:|');
+  for (const r of rows) {
+    md.push(`| ${status(r)} | ${cell(r.label)} | ${r.pass} | ${r.fail} | ${r.error} | ${r.evalTokens} | ${r.gradeTokens} |`);
+  }
+
+  for (const r of failedRows) {
+    const tag = isEmailPrompt(r.label) ? ' (non-blocking)' : '';
+    md.push('', `<details><summary><b>${r.label}</b>: ${r.failures.length} failure(s)${tag}</summary>`, '');
+    md.push('| Test | Reason |', '|---|---|');
+    for (const f of r.failures) md.push(`| ${cell(f.test)} | ${f.error ? '**error**: ' : ''}${cell(f.reason)} |`);
+    md.push('', '</details>');
+  }
+
+  fs.appendFileSync(summaryPath, md.join('\n') + '\n');
+}
+
+printConsole();
+writeStepSummary();
+process.exit(blockingFailures > 0 ? 1 : 0);
