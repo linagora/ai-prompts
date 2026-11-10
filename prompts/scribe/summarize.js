@@ -103,20 +103,24 @@ Merci à chaque responsable de service de me confirmer avant le 25 février la l
       ]
     },
     {
-      description: 'Summarize - the bullets of a slide',
+      description: 'Summarize - a list of redundant bullets',
       vars: {
         input: `# Nouveautés
 
-- Le partage de fichiers est entièrement refait, avec des liens protégés par mot de passe
-- La recherche affiche les résultats en moins d'une seconde
-- Un assistant d'écriture corrige, résume et traduit le texte sélectionné`
+- La recherche est beaucoup plus rapide qu'avant
+- Les résultats de recherche s'affichent désormais en moins d'une seconde
+- Fini l'attente : trouver un fichier est maintenant quasi instantané`
       },
       assert: [
         noTranslation(),
-        // One paragraph, shorter than the bullets
+        {
+          type: 'llm-rubric',
+          value: 'The three items of the list say the same thing. The summary says that the search is now much faster; giving the "under a second" figure in the same sentence is fine. It fails only if it goes through the items one by one, restating the idea three times.'
+        },
+        // One paragraph, at most 60% of the bullets (input.length == 206)
         {
           type: 'javascript',
-          value: "output.trim().split(/\\n+/).filter(line => line.trim()).length === 1 && output.length <= 180"
+          value: "output.trim().split(/\\n+/).filter(line => line.trim()).length === 1 && output.length <= 123"
         }
       ]
     }
