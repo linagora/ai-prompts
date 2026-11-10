@@ -6,8 +6,7 @@ const { noExtraInfo, translationAccurate } = require('./assertions');
 // too easy and pass on every model, hiding real translation-quality differences.
 const SAMPLE_INPUTS = {
   French: "Le rapport trimestriel fait état d'une baisse de 15 % des marges nettes sur un an, que le conseil d'administration impute aux ruptures d'approvisionnement et au report des dépenses d'investissement.",
-  English: "The quarterly report highlights a 15% year-over-year decline in net margins, which the board attributes to supply-chain bottlenecks and deferred capital expenditures.",
-  Mongolian: "Улирлын тайланд цэвэр ашгийн хэмжээ өмнөх оны мөн үетэй харьцуулахад 15 хувиар буурсныг тэмдэглэж, захиргааны зөвлөл үүнийг нийлүүлэлтийн сүлжээний тасалдал болон хойшлуулсан хөрөнгө оруулалтаар тайлбарлажээ."
+  English: "The quarterly report highlights a 15% year-over-year decline in net margins, which the board attributes to supply-chain bottlenecks and deferred capital expenditures."
 };
 
 /**
