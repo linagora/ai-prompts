@@ -69,6 +69,40 @@ Merci de m'indiquer vos contraintes alimentaires avant vendredi, et de prévoir 
       ]
     },
     {
+      description: 'Summarize - long meeting report',
+      vars: {
+        input: `Compte rendu de la réunion du projet de migration de la messagerie, 18 février
+
+Présents : Claire (communication), Karim (tests), Sophie (infrastructure), Marc (chef de projet).
+
+1. Avancement
+Sophie a terminé la configuration des nouveaux serveurs la semaine dernière. Les sauvegardes quotidiennes fonctionnent et la reprise après incident a été testée avec succès jeudi. Karim a migré les 40 boîtes du service pilote : les mails et les contacts sont bien passés, mais la synchronisation des agendas partagés échoue encore pour une dizaine d'utilisateurs.
+
+2. Date de la migration
+Le correctif de l'éditeur pour les agendas partagés n'arrivera que le 10 mars : l'équipe décide de reporter la migration générale du 3 mars au 17 mars. Marc préviendra la direction cette semaine. Le budget n'est pas affecté, car le contrat de l'ancien serveur peut être prolongé d'un mois sans frais.
+
+3. Communication
+Claire enverra un mail à tous les utilisateurs le 10 mars pour annoncer la nouvelle date, avec un guide d'une page sur les changements visibles (adresse du webmail, réglages du téléphone). Une permanence sera tenue à la cafétéria les 17 et 18 mars pour aider ceux qui en ont besoin. L'idée d'une courte vidéo a été écartée faute de temps.
+
+4. Divers
+La prochaine réunion aura lieu le 4 mars à 10 h, en salle Everest.
+
+Merci à chaque responsable de service de me confirmer avant le 25 février la liste des personnes absentes la semaine du 17 mars, pour que leur migration soit planifiée à leur retour.`
+      },
+      assert: [
+        noTranslation(),
+        {
+          type: 'llm-rubric',
+          value: 'The summary says that the migration is postponed to March 17, and keeps the request about the people absent that week, with its February 25 deadline, in any wording. It may leave out the other details.'
+        },
+        // At most 30% of the input (input.length == 1501)
+        {
+          type: 'javascript',
+          value: "output.length <= 450"
+        }
+      ]
+    },
+    {
       description: 'Summarize - the bullets of a slide',
       vars: {
         input: `# Nouveautés
