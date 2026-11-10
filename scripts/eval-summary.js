@@ -57,16 +57,29 @@ const total = rows.reduce(
   { pass: 0, fail: 0, error: 0, evalTokens: 0, gradeTokens: 0 }
 );
 const failedRows = rows.filter(r => r.failures.length > 0);
-const blockingFailures = failedRows.filter(r => !isEmailPrompt(r.label)).reduce((n, r) => n + r.failures.length, 0);
 
-let verdict;
-if (failedRows.length === 0) {
-  verdict = 'All tests passed.';
-} else if (blockingFailures > 0) {
-  verdict = `${blockingFailures} non-email test(s) failed. Only email classification tests are allowed to fail.`;
-} else {
-  verdict = 'Only email classification tests failed; CI will not block on these results.';
-}
+const SUITES = [
+  { name: 'scribe', thresholdEnv: 'SCRIBE_PASS_RATE_THRESHOLD', matches: label => !isEmailPrompt(label) },
+  { name: 'email', thresholdEnv: 'EMAIL_PASS_RATE_THRESHOLD', matches: isEmailPrompt },
+];
+
+const suites = SUITES.map(suite => {
+  const suiteRows = rows.filter(r => suite.matches(r.label));
+  const passed = suiteRows.reduce((n, r) => n + r.pass, 0);
+  const tests = suiteRows.reduce((n, r) => n + r.pass + r.fail + r.error, 0);
+  const threshold = process.env[suite.thresholdEnv] ? Number(process.env[suite.thresholdEnv]) : 100;
+  const rate = tests > 0 ? (100 * passed) / tests : 100;
+  return { ...suite, passed, tests, threshold, rate, ok: rate >= threshold };
+}).filter(s => s.tests > 0);
+const failedSuites = suites.filter(s => !s.ok);
+const suiteOf = label => suites.find(s => s.matches(label));
+const suiteLine = s =>
+  `${s.name}: ${s.passed}/${s.tests} passed (${s.rate.toFixed(1)}%, threshold ${s.threshold}%)`;
+
+const verdict =
+  failedSuites.length === 0
+    ? 'Every suite meets its pass-rate threshold.'
+    : `Below the pass-rate threshold: ${failedSuites.map(s => s.name).join(', ')}.`;
 
 function printConsole() {
   const nameWidth = Math.max(6, ...rows.map(r => r.label.length)) + 2;
@@ -83,11 +96,13 @@ function printConsole() {
   out.push(rule);
   out.push(line('TOTAL', total));
 
+  out.push('', '=== Pass rate by suite ===', '');
+  for (const s of suites) out.push(`${s.ok ? '✓' : '✗'} ${suiteLine(s)}`);
+
   if (failedRows.length > 0) {
     out.push('', `=== Failures (${total.fail + total.error}) ===`);
     for (const r of failedRows) {
-      const tag = isEmailPrompt(r.label) ? ' [non-blocking]' : '';
-      out.push('', `${r.label} (${r.failures.length})${tag}`);
+      out.push('', `${r.label} (${r.failures.length})`);
       for (const f of r.failures) {
         out.push(`  ✗ ${f.error ? '[error] ' : ''}${f.test}`);
         out.push(`      ${f.reason}`);
@@ -104,11 +119,13 @@ function writeStepSummary() {
   if (!summaryPath) return;
 
   const cell = s => String(s).replace(/\|/g, '\\|');
-  const status = r => (r.failures.length === 0 ? '✅' : isEmailPrompt(r.label) ? '⚠️' : '❌');
+  const status = r => (r.failures.length === 0 ? '✅' : suiteOf(r.label)?.ok ? '⚠️' : '❌');
 
   const md = [];
   md.push('## Prompt evaluation', '');
   md.push(`**${total.pass}/${results.length} passed** · ${verdict}`, '');
+  for (const s of suites) md.push(`- ${s.ok ? '✅' : '❌'} ${suiteLine(s)}`);
+  md.push('');
   md.push('| | Prompt | Pass | Fail | Error | Eval tokens | Grading tokens |');
   md.push('|---|---|--:|--:|--:|--:|--:|');
   for (const r of rows) {
@@ -116,8 +133,7 @@ function writeStepSummary() {
   }
 
   for (const r of failedRows) {
-    const tag = isEmailPrompt(r.label) ? ' (non-blocking)' : '';
-    md.push('', `<details><summary><b>${r.label}</b>: ${r.failures.length} failure(s)${tag}</summary>`, '');
+    md.push('', `<details><summary><b>${r.label}</b>: ${r.failures.length} failure(s)</summary>`, '');
     md.push('| Test | Reason |', '|---|---|');
     for (const f of r.failures) md.push(`| ${cell(f.test)} | ${f.error ? '**error**: ' : ''}${cell(f.reason)} |`);
     md.push('', '</details>');
@@ -128,4 +144,4 @@ function writeStepSummary() {
 
 printConsole();
 writeStepSummary();
-process.exit(blockingFailures > 0 ? 1 : 0);
+process.exit(failedSuites.length > 0 ? 1 : 0);
