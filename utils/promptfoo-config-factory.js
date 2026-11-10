@@ -134,6 +134,7 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
           apiBaseUrl,
           apiKey: process.env.OPENAI_API_KEY,
           maxRetries: 3,
+          max_tokens: 2048,
           // Reasoning models (e.g. qwen3.8) return their chain-of-thought in
           // reasoning_content; without this promptfoo prepends it as "Thinking: …"
           // to the output and the edited-text assertions all fail.
