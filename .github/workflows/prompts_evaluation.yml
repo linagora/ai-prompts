@@ -27,8 +27,9 @@ jobs:
           JUDGE_MODEL_ID: ${{ secrets.JUDGE_MODEL_ID }}
           EVAL_CONCURRENCY: 8
           # LLM outputs vary from run to run, so a single failed test is noise:
-          # fail the job only when the overall pass rate drops below 85%.
-          PROMPTFOO_PASS_RATE_THRESHOLD: 85
+          # eval-summary fails the job only when a suite drops below its threshold.
+          SCRIBE_PASS_RATE_THRESHOLD: 90
+          EMAIL_PASS_RATE_THRESHOLD: 75
           # Its system prompt is deprecated in favor of classify-email-generic.
           EVAL_SKIP_PROMPTS: classify-email-required
           # PRs run the small dataset as a fast gate; manual runs evaluate the
