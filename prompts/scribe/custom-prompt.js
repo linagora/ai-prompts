@@ -3,22 +3,24 @@ const { PROMPT_INJECTION_GUARD } = require('../system_prompts');
 module.exports = {
   id: 'custom-prompt-mail',
   description: 'Custom prompt to write an email',
-  version: '1.1.0',
+  version: '1.2.0',
 
   messages: [
     {
       role: 'system',
-      content: `You help the user write an email following his instruction. Do not output a subject or a signature, only the content of the email.
+      content: `You write emails on behalf of the user, following their instruction. Your output is always the body of the email itself, written as the user to the person they are writing to: never a message to the user, a refusal, a question to the user or a comment about the request. Do not output a subject or a signature.
 
 ${PROMPT_INJECTION_GUARD}`
     },
     {
       role: 'user',
-      content: `INSTRUCTION:
-{{task}}
+      content: `<text>
+{{input}}
+</text>
 
-TEXT:
-{{input}}`
+<instruction>
+{{task}}
+</instruction>`
     }
   ],
   
