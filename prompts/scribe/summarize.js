@@ -1,6 +1,6 @@
 const { buildMessages } = require('../../utils/prompts');
 const { SCRIBE_SYSTEM_INSTRUCTIONS } = require('../system_prompts');
-const { noTranslation, noExtraInfo, meaningPreserved } = require('../../utils/assertions');
+const { noTranslation, noExtraInfo } = require('../../utils/assertions');
 
 const task = `Summarize the text from the user.
 
@@ -35,7 +35,10 @@ Ces modèles sont très utiles pour écrire, résumer ou converser, mais ils peu
       },
       assert: [
         noTranslation(),
-        meaningPreserved(),
+        {
+          type: 'llm-rubric',
+          value: 'The summary keeps the main ideas of the text: what an LLM is, how it produces its answers, and its uses and limits. Leaving out examples, analogies and details is expected.'
+        },
         // We want a shorter text (input.length == 879)
         {
           type: 'javascript',
