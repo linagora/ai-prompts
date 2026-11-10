@@ -154,6 +154,25 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
             // A reasoning judge can spend promptfoo's 1024-token default on its reasoning
             // and return no verdict, which fails the test.
             max_tokens: 8192,
+            // Without it the judge sometimes answers a bare "Pass" or "True", which
+            // llm-rubric cannot parse and counts as a failed test.
+            response_format: {
+              type: 'json_schema',
+              json_schema: {
+                name: 'grading',
+                strict: true,
+                schema: {
+                  type: 'object',
+                  properties: {
+                    reason: { type: 'string' },
+                    pass: { type: 'boolean' },
+                    score: { type: 'number' }
+                  },
+                  required: ['reason', 'pass', 'score'],
+                  additionalProperties: false
+                }
+              }
+            },
             showThinking: false
           }
         },
