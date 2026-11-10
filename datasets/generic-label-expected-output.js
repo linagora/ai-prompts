@@ -107,7 +107,7 @@ const emailExpectedResultsForSmallDataset = [
   { id: '02', description: 'Atlassian Cloud migration maturity test', expectedOutput: { labels: ['newsletter'] } },
   { id: '03', description: 'Open Source Experience launch webinar invitation', expectedOutput: { labels: [] } },
   { id: '04', description: 'New Android build for Visio Mobile', expectedOutput: { labels: [] } },
-  { id: '05', description: 'n8n security updates opt-in request', expectedOutput: { labels: [] } },
+  { id: '05', description: 'n8n security updates opt-in request', expectedOutput: { labels: ['needs-action', 'important'] } },
   { id: '06', description: 'Email requiring action - project review needed', expectedOutput: { labels: ['needs-action', 'important'] } },
   { id: '07', description: 'Email not requiring action - newsletter/informational', expectedOutput: { labels: ['newsletter'] } },
   { id: '08', description: 'Email requiring action - bug report with follow-up needed', expectedOutput: { labels: ['important', 'needs-action'] } },
