@@ -108,7 +108,7 @@ const emailExpectedResultsForSmallDataset = [
   { id: '04', description: 'New Android build for Visio Mobile', expectedOutput: { action: 'NO', labels: [] } },
   { id: '05', description: 'n8n security updates opt-in request', expectedOutput: { action: 'NO', labels: [] } },
   { id: '06', description: 'Email requiring action - project review needed', expectedOutput: { action: 'YES', labels: ['important'] } },
-  { id: '07', description: 'Email not requiring action - newsletter/informational', expectedOutput: { action: 'NO', labels: [] } },
+  { id: '07', description: 'Email not requiring action - newsletter/informational', expectedOutput: { action: 'NO', labels: ['newsletter'] } },
   { id: '08', description: 'Email requiring action - bug report with follow-up needed', expectedOutput: { action: 'YES', labels: ['important'] } },
   { id: '09', description: 'Email not requiring action - status update only', expectedOutput: { action: 'NO', labels: [] } },
   { id: '10', description: 'Email requiring action - approval needed', expectedOutput: { action: 'YES', labels: ['important'] } },
