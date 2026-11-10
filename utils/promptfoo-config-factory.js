@@ -151,6 +151,9 @@ function createPromptfooConfig({ promptsDir, logLabel, recursive = false }) {
             apiBaseUrl,
             apiKey: process.env.OPENAI_API_KEY,
             maxRetries: 3,
+            // A reasoning judge can spend promptfoo's 1024-token default on its reasoning
+            // and return no verdict, which fails the test.
+            max_tokens: 8192,
             showThinking: false
           }
         },
