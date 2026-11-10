@@ -95,10 +95,10 @@ Merci à chaque responsable de service de me confirmer avant le 25 février la l
           type: 'llm-rubric',
           value: 'The summary says that the migration is postponed to March 17, and keeps the request about the people absent that week, with its February 25 deadline, in any wording. It may leave out the other details.'
         },
-        // At most 30% of the input (input.length == 1501)
+        // At most 40% of the input (input.length == 1501)
         {
           type: 'javascript',
-          value: "output.length <= 450"
+          value: "output.length <= 600"
         }
       ]
     },
