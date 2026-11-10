@@ -3,6 +3,12 @@ const fs = require('fs');
 const Logger = require('../utils/logger');
 const logger = new Logger('promptfoo-config');
 
+// Comma-separated prompt ids whose tests are not run, e.g. deprecated prompts in CI
+const SKIPPED_PROMPTS = (process.env.EVAL_SKIP_PROMPTS || '')
+  .split(',')
+  .map(id => id.trim())
+  .filter(Boolean);
+
 /**
  * Load prompts from a specific directory
  * @param {string} promptsDir - Absolute path to prompts directory
@@ -67,7 +73,7 @@ function loadTestsFromDir(promptsDir, logLabel, recursive = false) {
       if (entry.isFile() && entry.name.endsWith('.js')) {
         try {
           const promptModule = require(fullPath);
-          if (promptModule.tests && Array.isArray(promptModule.tests)) {
+          if (Array.isArray(promptModule.tests) && !SKIPPED_PROMPTS.includes(promptModule.id)) {
             promptModule.tests.forEach(test => {
               tests.push({
                 ...test,
